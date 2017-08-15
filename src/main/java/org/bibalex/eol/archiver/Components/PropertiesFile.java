@@ -1,6 +1,5 @@
 package org.bibalex.eol.archiver.Components;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 

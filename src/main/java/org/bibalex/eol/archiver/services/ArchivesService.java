@@ -1,23 +1,17 @@
 package org.bibalex.eol.archiver.services;
 
 /**
- * Created by hduser on 4/18/17.
+ * Created by maha.mostafa on 4/18/17.
  */
 
 import model.BA_Proxy;
-import org.bibalex.eol.archiver.controllers.RestAPIController;
 import org.bibalex.eol.archiver.utils.Constants;
 import org.bibalex.eol.archiver.utils.Downloader;
 import org.bibalex.eol.archiver.utils.FileManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -40,11 +34,12 @@ public class ArchivesService {
     }
 
     /**
-     *
-     * @param uploadedFile
-     * @param basePath
-     * @param resId
-     * @throws IOException
+     * Saves the input resource file on disk, if it was found before, it will be replaced.
+     * @param uploadedFile the uploaded file.
+     * @param basePath the directory of where to save it.
+     * @param resId the resource id of the uploaded file.
+     * @param isOrg 1 if it is the uploaded file, 0 if it is DWCA.
+     * @return true if the saving of the resource in its right directory was successful
      */
     public boolean saveUploadedArchive(MultipartFile uploadedFile, String basePath, String resId, String isOrg) {
         try {
@@ -53,7 +48,6 @@ public class ArchivesService {
 
             String fullPath = basePath + File.separator + resId + File.separator + prefix + "_" + uploadedFile.getOriginalFilename();
 
-            logger.debug("org.bibalex.eol.archiver.services.ArchivesService.saveUploadedArchive: fullPath: " + fullPath);
             Path directoryPath = Paths.get(basePath + File.separator + resId);
             Path filePath = Paths.get(fullPath);
 
@@ -72,25 +66,33 @@ public class ArchivesService {
                 if(files.length > 0) {
                     File file = files[0];
                     if (!file.delete()) {
-                        logger.error("org.bibalex.eol.archiver.services.ArchivesService.saveUploadedArchive(): Resource (" + resId + ") already exists, it can't be deleted.");
+                        logger.error("org.bibalex.eol.archiver.services.ArchivesService.saveUploadedArchive(): Resource (" + resId + ") is " +
+                                ((isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) ? "original " : "DWCA ") + " and already exists, it can't be deleted.");
                         succeeded = false;
                     } else {
                         Files.copy(uploadedFile.getInputStream(), filePath);
-                        logger.info("Resource (" + resId + ") already exists, it will be replaced.");
+                        logger.info("Resource (" + resId + ") is " + ((isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) ? "original " : "DWCA ") + "and already exists, it will be replaced.");
                     }
                 } else {
-                    logger.debug("Resource (" + resId + ") is created for first time.");
+                    logger.info("Resource (" + resId + ") is " + ((isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) ? "original " : "DWCA ") + " and created for first time.");
                     Files.copy(uploadedFile.getInputStream(), filePath);
                 }
             }
             return succeeded;
         } catch (IOException e) {
-            logger.error("org.bibalex.eol.archiver.services.ArchivesService.saveUploadedArchive(): Failed to save file (" + uploadedFile.getOriginalFilename() +")"+ e.getMessage());
+            logger.error("org.bibalex.eol.archiver.services.ArchivesService.saveUploadedArchive(): Failed to save file (" + uploadedFile.getOriginalFilename() +") is "
+                    + ((isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) ? "original " : "DWCA ") + e.getMessage());
             return false;
         }
     }
 
-
+    /**
+     * Reads the resource file from its directory and returns it. If the DWCA doesn't exist so it will return the publishing uploaded file.
+     * @param basePath the base directory where all resources are saved.
+     * @param resId the id of the required resource.
+     * @param isOrg 1 if the required file is the uploaded in the publishing layer, 0 if the required file is the DWCA
+     * @return the required resource file.
+     */
     public File getResourceFile(String basePath, String resId, String isOrg) {
         File file = null;
         File dir = new File(basePath + File.separator + resId);
@@ -103,7 +105,7 @@ public class ArchivesService {
         if (!isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE) && coreFiles.length != 0) {
             // Core file
             file = coreFiles[0];
-            logger.info("Downloading to harvester core file [" + file.getName() + "] of resource [" + resId + "] ..");
+            logger.info("Downloading DWCA file [" + file.getName() + "] of resource [" + resId + "] ..");
         } else {
             orgFiles = dir.listFiles(new FilenameFilter() {
                 public boolean accept(File dir, String name) {
@@ -116,12 +118,12 @@ public class ArchivesService {
             } else {
                 file = orgFiles[0];
                 // Input stream resource
-                if (isOrg.equalsIgnoreCase("1"))
-                    logger.info("Downloading to harvester original file [" + file.getName() + "] of resource [" + resId + "] ..");
+                if (isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE))
+                    logger.info("Downloading original file [" + file.getName() + "] of resource [" + resId + "] ..");
                 else {
-                    logger.info("Downloading to harvester core file [" + file.getName() + "] of resource [" + resId + "] .. But it doesn't exist so original is downloaded.");
+                    logger.info("Downloading DWCA file [" + file.getName() + "] of resource [" + resId + "] .. But it doesn't exist so original will be downloaded.");
                     // uncomment if want to not download original when core is required
-//                    succeeded = false;
+//                    file = null;
                 }
             }
         }
@@ -130,15 +132,23 @@ public class ArchivesService {
 
 
     /**
-     * Copy file from source to destination using stream
-     * @param source
-     * @param dest
+     * Copy file from source to destination using stream.
+     * @param source the source file to be copied.
+     * @param dest the destination file to copy the data to.
      * @throws IOException
      */
     public void copyFile(File source, File dest) throws IOException {
         fileManager.customBufferBufferedStreamCopy(source, dest);
     }
 
+    /**
+     * Downloads the input media urls and saves them on disk.
+     * @param mediaURLs a list of the URLs to be downloaded.
+     * @param proxySettings an object contains the settings of the server proxy.
+     * @param threadsCount the number of threads required to do the download process. If it is 1 it will be serial.
+     * @param dir the dircetory where to save the downloaded media.
+     * @return a hash list of the each URL and its path concatenated with the downloaded status.
+     */
     public HashMap<String, String> downloadMedia(List<String> mediaURLs, BA_Proxy proxySettings, int threadsCount, String dir)  {
         HashMap<String, String> resultList = new HashMap<String, String>();
         Downloader downloader = new Downloader(proxySettings);
@@ -177,7 +187,6 @@ public class ArchivesService {
         } else {
             // sequential Download
             mediaURLs.stream().forEach(url -> {
-                System.out.println("URL: " + url);
                 resultList.put(url, downloader.downloadFromUrl(url, dir));
             });
         }
@@ -185,12 +194,21 @@ public class ArchivesService {
 
     }
 
+    /**
+     * Downlaods a subset of the input URLs list.
+     * @param threadPoolExecutor a pool that contain all the threads.
+     * @param mediaURLs the URLs to be downloaded.
+     * @param downloader the downloader object.
+     * @param start the start index in the URLs list to start download from.
+     * @param end the end index in the URLs list to stop download at.
+     * @param dir the directory to save the URLs downloaded files.
+     * @return a future result of the path and download status.
+     */
     private Future executeDownloadThread(ThreadPoolExecutor threadPoolExecutor, List<String> mediaURLs, Downloader downloader, int start, int end, String dir) {
         Future threadResult = threadPoolExecutor.submit(new Callable<HashMap<String, String>>() {
             @Override
             public HashMap<String, String> call() throws Exception {
                 HashMap<String, String> result = new HashMap<String, String>();
-                System.out.println("Thread start from index----------------->" + start);
                 mediaURLs.subList(start, end).stream().forEach(url -> {
                    result.put(url, downloader.downloadFromUrl(url, dir));
                 });

@@ -1,38 +1,30 @@
 package org.bibalex.eol.archiver.controllers;
 
 import model.BA_Proxy;
-import org.apache.commons.io.IOUtils;
 import org.bibalex.eol.archiver.services.ArchivesService;
 import org.bibalex.eol.archiver.Components.PropertiesFile;
 import org.bibalex.eol.archiver.utils.Constants;
-import org.bibalex.eol.archiver.utils.Downloader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.annotation.PostConstruct;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.*;
 
 /**
- * Created by hduser on 4/18/17.
+ * Created by maha.mostafa on 4/18/17.
  */
 @RestController
 @RequestMapping("/archiver")
@@ -57,7 +49,6 @@ public class RestAPIController {
         proxy = new BA_Proxy();
         this.basePath = app.getBasePath();
         this.tmpPath = app.getTmpPath();
-        System.out.println(app.getProxyExists());
         proxy.setProxyExists((app.getProxyExists().equalsIgnoreCase("true")) ? true : false);
         proxy.setPort(app.getPort());
         proxy.setProxy(app.getProxy());
@@ -65,22 +56,21 @@ public class RestAPIController {
         proxy.setPassword(app.getPassword());
     }
 
-    // publishing layer calls
-
     /**
-     * @param resId
-     * @param isOrg 1 if uploaded from the punlishing, 0 if DWCA from harvester
-     * @return a response containing success or error message,
-     * Content-Type →text/plain;charset=UTF-8
+     * A post function to upload a resource.
+     * @param resId the unique id of the resource.
+     * @param uploadedFile the uploaded resource.
+     * @param isOrg is "1" if the resource uploaded from the publishing layer, "0" if it was a DWCA resource.
+     * @return a success status if succeeded, error otherwise.
      */
     @RequestMapping(value="/uploadResource/{resId}/{isOrg}", method = RequestMethod.POST)
     public ResponseEntity<String> uploadResource(@PathVariable("resId") String resId, @RequestParam("file") MultipartFile uploadedFile, @PathVariable("isOrg") String isOrg)  {
         // By default upload the original resource
-        logger.debug("Uploading Resource");
         if(! validResourceType(isOrg))
             isOrg = getDefaultResourceType();
-        logger.info("Publishing Layer uploads resource file [" + uploadedFile.getOriginalFilename() + "] ..");
+        logger.info("Uploading resource file [" + uploadedFile.getOriginalFilename() + "] which is " + ((isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) ? "original " : "DWCA ") + " ..");
         if (uploadedFile.isEmpty()) {
+            logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.uploadResource: uploaded file is empty.");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         if(service.saveUploadedArchive(uploadedFile, basePath, resId, isOrg))
@@ -102,11 +92,11 @@ public class RestAPIController {
     }
 
     /**
-     * Downloads the original resource or the core resource based on the input type.
-     * If the core doesn't exist it will download the original
-     * @param resId
-     * @param isOrg 1 or 0
-     * @return
+     * A post function downloads the original resource or the DWCA resource based on the input type.
+     * If the core doesn't exist it will download the original.
+     * @param resId the unique id of the resource.
+     * @param isOrg is "1" if the resource uploaded from the publishing layer, "0" if it was a DWCA resource.
+     * @return the reqired resource file.
      */
     @RequestMapping(value = "/downloadResource/{resId}/{isOrg}", method = RequestMethod.GET)
     public ResponseEntity<InputStreamResource> downloadResource(@PathVariable("resId") String resId, @PathVariable("isOrg") String isOrg) {
@@ -115,7 +105,7 @@ public class RestAPIController {
             if(! validResourceType(isOrg))
                 isOrg = getDefaultResourceType();
 
-            logger.debug("Downloading Resource");
+            logger.info("Downloading resource file [" + resId + "] which is " + ((isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) ? "original " : "DWCA "));
             File file = service.getResourceFile(basePath, resId, isOrg);
             InputStreamResource resource;
             // or use resource byte array
@@ -164,27 +154,27 @@ public class RestAPIController {
     @RequestMapping(value = "/downloadResourceMultiFile", method = RequestMethod.GET)
     public void downloadResourceMultiFile(@RequestParam("resId") String resId, HttpServletResponse response) {
 
-        File[] files = (new File(basePath + File.separator + resId)).listFiles();
-        // Get the file
-        FileInputStream fis = null;
-        try {
-            fis = new FileInputStream(files[0]);
-
-        } catch (FileNotFoundException fnfe) {
-            // If the file does not exists, continue with the next file
-            System.out.println("Couldfind file " + files[0].getAbsolutePath());
-        }
-        response.addHeader("Content-disposition", "inline;filename=myfilename.txt");
-        response.setContentType("text/plain");
-
-        // Copy the stream to the response's output stream.
-        try {
-            IOUtils.copy(fis, response.getOutputStream());
-
-        response.flushBuffer();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        File[] files = (new File(basePath + File.separator + resId)).listFiles();
+//        // Get the file
+//        FileInputStream fis = null;
+//        try {
+//            fis = new FileInputStream(files[0]);
+//
+//        } catch (FileNotFoundException fnfe) {
+//            // If the file does not exists, continue with the next file
+//            logger.debug("Could find file " + files[0].getAbsolutePath());
+//        }
+//        response.addHeader("Content-disposition", "inline;filename=myfilename.txt");
+//        response.setContentType("text/plain");
+//
+//        // Copy the stream to the response's output stream.
+//        try {
+//            IOUtils.copy(fis, response.getOutputStream());
+//
+//        response.flushBuffer();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         ///--------------------------------------------------------
 //        System.out.println("-------d-----");
 //
@@ -256,21 +246,21 @@ public class RestAPIController {
     }
 
     /**
-     *
-     * @param resId
-     * @param mediaURLs, ["url1", "url2", ..]
-     * @return
+     *  A post function that dowloads a list of media URLs files.
+     * @param resId the resource unique id.
+     * @param mediaURLs, a list of the media URLs in the format of "["url1", "url2", ..]"
+     * @return a hash in json format of each URL and its path in storage layer concatenated with the download status.
      */
-    // uses UriComponentsBuilder, rest template to generate client
     @RequestMapping(value="/downloadMedia/{resId}", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public ResponseEntity<HashMap<String, String>> downloadMedia(@PathVariable("resId") String resId,
                                              @RequestBody List<String> mediaURLs) {
 
-        logger.debug("Downloading Media");
+        // TODO
+        // uses UriComponentsBuilder, rest template to generate client
+        logger.info("Downloading Media of resource (" + resId + ") ..");
 
-        mediaURLs.stream().forEach(c -> System.out.println(c));
         long startT = System.currentTimeMillis();
-        HashMap<String, String> resultList = new HashMap<>();
+        HashMap<String, String> resultList = new HashMap<String, String>();
 
         try {
             String downloadMediaPath = basePath + File.separator + resId + File.separator + Constants.MEDIA_FOLDER + File.separator;
@@ -311,17 +301,4 @@ public class RestAPIController {
 
     }
 
-    @RequestMapping(value="/downloadMedia2/{resId}", method = RequestMethod.POST, consumes = "application/json")
-    public ResponseEntity<String> downloadMedia2(@PathVariable("resId") String resId,
-                                             @RequestBody List<String> mediaURLs) {
-        Downloader downloader = new Downloader(proxy);
-        long x = System.currentTimeMillis();
-        mediaURLs.stream().forEach(file -> {
-            System.out.println("LINK----------------->" + file);
-            downloader.downloadFromUrl2(file, "/home/hduser/eol/StorageLayer/testSpace/tmp/");
-        });
-
-        System.out.println("Time URL: " + (System.currentTimeMillis() - x));
-        return new ResponseEntity("Successfully uploaded original resource - " , new HttpHeaders(), HttpStatus.OK);
-    }
 }

@@ -1,50 +1,35 @@
 package org.bibalex.eol.archiver.utils;
 
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.bibalex.eol.archiver.controllers.RestAPIController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import model.BA_Proxy;
 import java.io.*;
 import java.net.*;
-import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.UUID;
 
 
 /**
- * Created by hduser on 7/27/17.
+ * Created by maha.mostafa on 7/27/17.
  */
 public class Downloader {
 
 
     private static final Logger logger = LoggerFactory.getLogger(RestAPIController.class);
     private BA_Proxy proxy;
-    private static final int BUFFER_SIZE = 4096;
+    private static final int BUFFER_SIZE = 4096; //4MG or 8192 8MG
 
     public Downloader(BA_Proxy proxy) {
         this.proxy = proxy;
         setProxy();
     }
 
-
-    public boolean downloadFromUrl2(String fileURL, String dir) {
-        boolean success = true;
-        try {
-            logger.info("File (" + fileURL + ") to be downloaded");
-            URL httpurl = new URL(fileURL + "?_=" + System.currentTimeMillis());
-            setProxy();
-            String fileName = getFileNameFromUrl(fileURL);
-            File f = new File(dir + fileName);
-            FileUtils.copyURLToFile(httpurl, f);
-        } catch (Exception e) {
-            success = false;
-            logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: No file to download. ");
-        }
-        return success;
-    }
-
+    /**
+     * Sets up the storage layer proxy settings, if exist
+     */
     private void setProxy() {
         if(proxy.isProxyExists()) {
             System.setProperty("http.proxyHost", proxy.getProxy());
@@ -69,18 +54,11 @@ public class Downloader {
         }
     }
 
-    public void downloadUsingHttpClient(String url, String dir) {
-//        HttpClient httpclient = new DefaultHttpClient();
-//        HttpGet httpget = new HttpGet(urltofetch);
-//        HttpResponse response = httpclient.execute(httpget);
-//        HttpEntity entity = response.getEntity();
-//        if (entity != null) {
-//            long len = entity.getContentLength();
-//            InputStream inputStream = entity.getContent();
-//            // write the file to whether you want it.
-//        }
-    }
-
+    /**
+     * Extracts the file name of the uploaded URL
+     * @param url the input file URL
+     * @return the name of the file, if exist. Otherwise it will generate a name consisting of the current timestamp
+     */
     private static String getFileNameFromUrl(String url) {
         String name = new Long(System.currentTimeMillis()).toString();
         int index = url.lastIndexOf("/");
@@ -93,6 +71,12 @@ public class Downloader {
         return name;
     }
 
+    /**
+     * Downloads the file from the input URL and saves it in the input directory.
+     * @param fileURL the URL of the file.
+     * @param saveDir the directory where to save the downloaded URL.
+     * @return a string of both the new file directory and the uploading status separated by ,
+     */
     public String downloadFromUrl(String fileURL, String saveDir) {
         URL url = null;
         boolean success = true;
@@ -134,8 +118,12 @@ public class Downloader {
 
                 // opens input stream from the HTTP connection
                 InputStream inputStream = httpConn.getInputStream();
-                saveFilePath = saveDir + File.separator + encodedURL;
+                saveFilePath = saveDir + encodedURL;
 
+                // TODO
+                // Check if directory exists
+
+                // saves the input stream of the file URL
                 saveURLStream(inputStream, saveFilePath);
 
                 logger.info("File (" + fileURL + ") is downloaded");
@@ -148,27 +136,35 @@ public class Downloader {
         } catch (MalformedURLException e) {
             success = false;
             logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: " + e.getMessage());
-            e.printStackTrace();
+            ExceptionUtils.getStackTrace(e);
         } catch (FileNotFoundException e) {
             success = false;
-            logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: " + e.getStackTrace().toString());
-            e.printStackTrace();
+            logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: " + e.getMessage());
         } catch (IOException e) {
             success = false;
             logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: " + e.getMessage());
-            e.printStackTrace();
         } finally {
-            System.out.println("CLOSINGGGGGGGGGGGGGGGGGGGGGG");
             httpConn.disconnect();
         }
 
         return saveFilePath + "," + success;
     }
 
+    /**
+     * Encodes the url string to another name to be saved with it.
+     * @param url the input URL.
+     * @return the encoded string
+     */
     private String encodeURL(String url) {
         return UUID.nameUUIDFromBytes(url.getBytes()).toString();
     }
 
+    /**
+     * Saves the downloaded input stream into file.
+     * @param inputStream the input URL stream.
+     * @param saveFilePath the directory where to save the file.
+     * @throws IOException
+     */
     private void saveURLStream(InputStream inputStream, String saveFilePath) throws IOException {
         // Using java IO
 //        // opens an output stream to save into file
@@ -189,7 +185,4 @@ public class Downloader {
 //        channel.close();
     }
 
-    public static void main(String[] args) {
-
-    }
 }
