@@ -55,7 +55,7 @@ public class ArchivesService {
                 Files.createDirectories(directoryPath);
                 Files.copy(uploadedFile.getInputStream(), filePath);
 
-                // TODO
+                // TODO 
                 // create a duplicate DWCA until connectors are created
                 if(isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) {
                     Files.copy(uploadedFile.getInputStream(), Paths.get(basePath + File.separator + resId + File.separator + "core" + "_" + uploadedFile.getOriginalFilename()));
