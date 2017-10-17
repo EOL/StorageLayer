@@ -35,7 +35,7 @@ public class RestAPIController {
     @Autowired
     private ArchivesService service;
     private String basePath;
-    private String tmpPath;
+    private String contentPPath;
     private PropertiesFile app;
     private BA_Proxy proxy;
 
@@ -48,7 +48,7 @@ public class RestAPIController {
     public void init() {
         proxy = new BA_Proxy();
         this.basePath = app.getBasePath();
-        this.tmpPath = app.getTmpPath();
+        this.contentPPath = app.getContentPPath();
         proxy.setProxyExists((app.getProxyExists().equalsIgnoreCase("true")) ? true : false);
         proxy.setPort(app.getPort());
         proxy.setProxy(app.getProxy());
@@ -301,4 +301,41 @@ public class RestAPIController {
 
     }
 
-}
+    /**
+     * A post function to upload a content partner logo.
+     * @param cpId the unique id of the content partner.
+     * @param uploadedFile the uploaded resource.
+     * @return a success status if succeeded, error otherwise.
+     */
+    @RequestMapping(value="/uploadContentPartnerLogo/{cpId}", method = RequestMethod.POST)
+    public ResponseEntity<String> uploadContentPartnerLogo(@PathVariable("cpId") String cpId, @RequestParam("file") MultipartFile uploadedFile)  {
+        // By default upload the original resource
+
+        logger.info("Uploading logo file [" + uploadedFile.getOriginalFilename() + "] of cp [" + cpId + "]");
+        if (uploadedFile.isEmpty()) {
+            logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.uploadCPlogo: uploaded file is empty.");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if(service.saveUploadedLogo(uploadedFile, contentPPath, cpId))
+            return new ResponseEntity("Successfully uploaded logo file - " +
+                    uploadedFile.getOriginalFilename(), new HttpHeaders(), HttpStatus.OK);
+        else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+//    /**
+//     *  A post function that dowloads a list of media URLs files.
+//
+//     * @return a hash in json format of each URL and its path in storage layer concatenated with the download status.
+//     */
+//    @RequestMapping(value="/test", method = RequestMethod.POST)
+//    public ResponseEntity<String> test() {
+//
+//        System.out.println("in --------------------- fun --------------- ");
+//
+//        return new ResponseEntity<String>("teeeeeeeeeeeeeeeeeeeeeest", HttpStatus.OK);
+//
+//    }
+
+    }

@@ -11,7 +11,6 @@ public class BA_Proxy {
     private String proxy;
     private String port;
 
-
     public String getUserName() {
         return userName;
     }

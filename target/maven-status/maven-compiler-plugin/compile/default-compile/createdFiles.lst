@@ -5,10 +5,12 @@ org/bibalex/eol/archiver/services/ArchivesService$3.class
 org/bibalex/eol/archiver/utils/Downloader$1.class
 model/BA_Proxy.class
 org/bibalex/eol/archiver/Components/PropertiesFile.class
+org/bibalex/eol/archiver/services/ArchivesService$6.class
 org/bibalex/eol/archiver/services/ArchivesService$2.class
 org/bibalex/eol/archiver/utils/Downloader.class
 org/bibalex/eol/archiver/ArchiverApp.class
 org/bibalex/eol/archiver/services/ArchivesService$1.class
 org/bibalex/eol/archiver/utils/FileManager.class
 org/bibalex/eol/archiver/controllers/RestAPIController.class
+org/bibalex/eol/archiver/services/ArchivesService$5.class
 org/bibalex/eol/archiver/utils/Constants.class

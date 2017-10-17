@@ -54,6 +54,12 @@ public class ArchivesService {
             if(Files.notExists(directoryPath)) {
                 Files.createDirectories(directoryPath);
                 Files.copy(uploadedFile.getInputStream(), filePath);
+
+                // TODO
+                // create a duplicate DWCA until connectors are created
+                if(isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) {
+                    Files.copy(uploadedFile.getInputStream(), Paths.get(basePath + File.separator + resId + File.separator + "core" + "_" + uploadedFile.getOriginalFilename()));
+                }
             } else {
                 File dir = new File(basePath + File.separator + resId);
                 File[] files = dir.listFiles(new FilenameFilter() {
@@ -62,9 +68,21 @@ public class ArchivesService {
                     }
                 });
 
-                // If there is another org file
+                // Check if core files exist
+                File[] coreFiles = null;
+                if(isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) {
+                    File fdDir = new File(basePath + File.separator + resId);
+                    coreFiles = dir.listFiles(new FilenameFilter() {
+                        public boolean accept(File dir, String name) {
+                            return name.startsWith("core" + "_");
+                        }
+                    });
+                }
+
+                // If there is another same type file exist
                 if(files.length > 0) {
                     File file = files[0];
+
                     if (!file.delete()) {
                         logger.error("org.bibalex.eol.archiver.services.ArchivesService.saveUploadedArchive(): Resource (" + resId + ") is " +
                                 ((isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) ? "original " : "DWCA ") + " and already exists, it can't be deleted.");
@@ -72,10 +90,28 @@ public class ArchivesService {
                     } else {
                         Files.copy(uploadedFile.getInputStream(), filePath);
                         logger.info("Resource (" + resId + ") is " + ((isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) ? "original " : "DWCA ") + "and already exists, it will be replaced.");
+
+                        // TODO
+                        // create a duplicate DWCA until connectors are created
+                        if(isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) {
+                            Files.copy(uploadedFile.getInputStream(), Paths.get(basePath + File.separator + resId + File.separator + "core" + "_" + uploadedFile.getOriginalFilename()));
+                            if(coreFiles != null && coreFiles.length > 0) {
+                                coreFiles[0].delete();
+                            }
+                        }
+
                     }
                 } else {
                     logger.info("Resource (" + resId + ") is " + ((isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) ? "original " : "DWCA ") + " and created for first time.");
                     Files.copy(uploadedFile.getInputStream(), filePath);
+                    // TODO
+                    // create a duplicate DWCA until connectors are created
+                    if(isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) {
+                        Files.copy(uploadedFile.getInputStream(), Paths.get(basePath + File.separator + resId + File.separator + "core" + "_" + uploadedFile.getOriginalFilename()));
+                        if(coreFiles != null && coreFiles.length > 0) {
+                            coreFiles[0].delete();
+                        }
+                    }
                 }
             }
             return succeeded;
@@ -216,5 +252,44 @@ public class ArchivesService {
             }
         });
         return threadResult;
+    }
+
+    /**
+     * Save the uploaded logo of the content partner.
+     * @param uploadedFile the logo file.
+     * @param cpPath the path of the logos on the storage layer disk.
+     * @param cpId the content partner id.
+     * @return true if successfully uplaoded, false otherwise.
+     */
+    public boolean saveUploadedLogo(MultipartFile uploadedFile, String cpPath, String cpId) {
+        try {
+            boolean succeeded = true;
+            String fullPath = cpPath + File.separator + cpId + "_" + uploadedFile.getOriginalFilename();
+            Path filePath = Paths.get(fullPath);
+            logger.debug("Logo of (" + cpId + ") will be saved in (" + fullPath + ")");
+            File dir = new File(cpPath);
+            File[] files = dir.listFiles(new FilenameFilter() {
+                public boolean accept(File dir, String name) {
+                    return name.startsWith(cpId + "_");
+                }
+            });
+
+            // If there is another logo file
+            if(files != null && files.length > 0) {
+                File file = files[0];
+                if (!file.delete()) {
+                    logger.error("Content Partner has logo, but can't be deleted.");
+                    succeeded = false;
+                } else {
+                    logger.info("Content Partner has logo, it was deleted.");
+                }
+            }
+            Files.copy(uploadedFile.getInputStream(), filePath);
+            return succeeded;
+        } catch (IOException e) {
+            logger.error("org.bibalex.eol.archiver.services.ArchivesService.saveUploadedLogo(): Failed to save file (" + uploadedFile.getOriginalFilename() +") of content partner ("
+                    + cpId + "):" + e.getMessage());
+            return false;
+        }
     }
 }

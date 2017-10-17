@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class PropertiesFile {
 
     private String basePath;
-    private String tmpPath;
+    private String contentPPath;
     private String proxyUserName;
     private String password;
     private String proxyExists;
@@ -68,16 +68,16 @@ public class PropertiesFile {
         return basePath;
     }
 
-    public String getTmpPath() {
-        return tmpPath;
+    public String getContentPPath() {
+        return contentPPath;
     }
 
     public void setBasePath(String basePath) {
         this.basePath = basePath;
     }
 
-    public void setTmpPath(String tmpPath) {
-        this.tmpPath = tmpPath;
+    public void setContentPPath(String contentPPath) {
+        this.contentPPath = contentPPath;
     }
 
 }

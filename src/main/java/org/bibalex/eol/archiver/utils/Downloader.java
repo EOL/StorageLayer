@@ -61,7 +61,7 @@ public class Downloader {
      */
     private static String getFileNameFromUrl(String url) {
         String name = new Long(System.currentTimeMillis()).toString();
-        int index = url.lastIndexOf("/");
+        int index = url.lastIndexOf("/"); // Normal URL slash
         if (index > 0) {
             name = url.substring(index + 1);
             if (name.trim().length() > 0) {
