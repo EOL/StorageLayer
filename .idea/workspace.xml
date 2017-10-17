@@ -4,49 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/utils/Downloader.java" line="186" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="61fdf314-736b-4a32-9483-2d7e386fc455" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__antlr_antlr_2_7_7.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__dom4j_dom4j_1_6_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_transaction_javax_transaction_api_1_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_tomcat_jdbc_8_5_11.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_tomcat_juli_8_5_11.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_aspectj_aspectjweaver_1_8_9.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_common_hibernate_commons_annotations_5_0_1_Final.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_hibernate_core_5_0_12_Final.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_hibernate_entitymanager_5_0_12_Final.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_javax_persistence_hibernate_jpa_2_1_api_1_0_0_Final.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jboss_jandex_2_0_0_Final.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_aop_1_5_2_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_data_jpa_1_5_2_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_jdbc_1_5_2_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_jpa_1_11_1_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aspects_4_3_7_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jdbc_4_3_7_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_orm_4_3_7_RELEASE.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/model/BA_Proxy.class" afterPath="$PROJECT_DIR$/target/classes/model/BA_Proxy.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/ArchiverApp.class" afterPath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/ArchiverApp.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/Components/PropertiesFile.class" afterPath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/Components/PropertiesFile.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/controllers/RestAPIController.class" afterPath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/controllers/RestAPIController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/services/ArchivesService$2.class" afterPath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/services/ArchivesService$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/services/ArchivesService$3.class" afterPath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/services/ArchivesService$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/services/ArchivesService$4.class" afterPath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/services/ArchivesService$4.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/services/ArchivesService.class" afterPath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/services/ArchivesService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/model/BA_Proxy.java" afterPath="$PROJECT_DIR$/src/main/java/model/BA_Proxy.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/ArchiverApp.java" afterPath="$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/ArchiverApp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/Components/PropertiesFile.java" afterPath="$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/Components/PropertiesFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/controllers/RestAPIController.java" afterPath="$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/controllers/RestAPIController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/services/ArchivesService.java" afterPath="$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/services/ArchivesService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/utils/Downloader.java" afterPath="$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/utils/Downloader.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/application.properties" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/storagelayer.iml" afterPath="$PROJECT_DIR$/storagelayer.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/META-INF/spring-configuration-metadata.json" afterPath="$PROJECT_DIR$/target/classes/META-INF/spring-configuration-metadata.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/application.properties" afterPath="$PROJECT_DIR$/target/classes/application.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" />
-    </list>
+    <list default="true" id="61fdf314-736b-4a32-9483-2d7e386fc455" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -190,7 +148,7 @@
       <file leaf-file-name="ArchivesService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/services/ArchivesService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
+            <state relative-caret-position="378">
               <caret line="68" column="19" lean-forward="true" selection-start-line="68" selection-start-column="19" selection-end-line="68" selection-end-column="19" />
               <folding>
                 <element signature="e#3185#3186#0" expanded="true" />
@@ -1455,7 +1413,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/services/ArchivesService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
+        <state relative-caret-position="378">
           <caret line="68" column="19" lean-forward="true" selection-start-line="68" selection-start-column="19" selection-end-line="68" selection-end-column="19" />
           <folding>
             <element signature="e#3185#3186#0" expanded="true" />
