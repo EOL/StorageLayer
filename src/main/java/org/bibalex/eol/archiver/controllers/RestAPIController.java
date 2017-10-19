@@ -77,7 +77,7 @@ public class RestAPIController {
             return new ResponseEntity("Successfully uploaded original resource - " +
                 uploadedFile.getOriginalFilename(), new HttpHeaders(), HttpStatus.OK);
         else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -114,7 +114,7 @@ public class RestAPIController {
             if(file != null) {
                 resource = new InputStreamResource(new FileInputStream(file));
             } else {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
 
             // prevent caching
@@ -141,109 +141,13 @@ public class RestAPIController {
                     .body(new InputStreamResource(resource.getInputStream()));
         } catch(FileNotFoundException ex) {
             logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadResource():" + ex.getMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IOException e) {
             logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadResource():" + e.getMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-
-
-    // TODO later
-    @RequestMapping(value = "/downloadResourceMultiFile", method = RequestMethod.GET)
-    public void downloadResourceMultiFile(@RequestParam("resId") String resId, HttpServletResponse response) {
-
-//        File[] files = (new File(basePath + File.separator + resId)).listFiles();
-//        // Get the file
-//        FileInputStream fis = null;
-//        try {
-//            fis = new FileInputStream(files[0]);
-//
-//        } catch (FileNotFoundException fnfe) {
-//            // If the file does not exists, continue with the next file
-//            logger.debug("Could find file " + files[0].getAbsolutePath());
-//        }
-//        response.addHeader("Content-disposition", "inline;filename=myfilename.txt");
-//        response.setContentType("text/plain");
-//
-//        // Copy the stream to the response's output stream.
-//        try {
-//            IOUtils.copy(fis, response.getOutputStream());
-//
-//        response.flushBuffer();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-        ///--------------------------------------------------------
-//        System.out.println("-------d-----");
-//
-//
-//        // Set the response type and specify the boundary string
-//        response.setContentType("multipart/x-mixed-replace;boundary=END");
-//        System.out.println("------------");
-//        // Set the content type based on the file type you need to download
-//        String contentType = "Content-type: text/rtf";
-//
-//        // List of files to be downloaded
-//        File[] files = (new File(basePath + File.separator + resId)).listFiles();
-//
-//        ServletOutputStream out = null;
-//        try {
-//            out = response.getOutputStream();
-//
-//
-//
-//        // Print the boundary string
-//        out.println();
-//        out.println("--END");
-//
-//        for (File file : files) {
-//            System.out.println("FILES --------------- " + file.getName());
-//
-//            // Get the file
-//            FileInputStream fis = null;
-//            try {
-//                fis = new FileInputStream(file);
-//
-//            } catch (FileNotFoundException fnfe) {
-//                // If the file does not exists, continue with the next file
-//                System.out.println("Couldfind file " + file.getAbsolutePath());
-//                continue;
-//            }
-//
-//            BufferedInputStream fif = new BufferedInputStream(fis);
-//
-//            // Print the content type
-//            out.println(contentType);
-//            out.println("Content-Disposition: attachment; filename=" + file.getName());
-//            out.println();
-//
-//            System.out.println("Sending " + file.getName());
-//
-//            // Write the contents of the file
-//            int data = 0;
-//            while ((data = fif.read()) != -1) {
-//                out.write(data);
-//            }
-//            fif.close();
-//
-//            // Print the boundary string
-//            out.println();
-//            out.println("--END");
-//            out.flush();
-//            System.out.println("Finisheding file " + file.getName());
-//        }
-//
-//        // Print the ending boundary string
-//        out.println("--END--");
-//        out.flush();
-//        out.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-    }
 
     /**
      *  A post function that dowloads a list of media URLs files.
@@ -279,7 +183,7 @@ public class RestAPIController {
             });
             if(resultList.size() == 0) {
                 logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadMedia(): error during download threads.");
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
             // prevent caching
@@ -296,7 +200,7 @@ public class RestAPIController {
                     .body(resultList);
         } catch (IOException e) {
             logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadMedia(): error in creating media folder: " + e.getMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
@@ -307,8 +211,8 @@ public class RestAPIController {
      * @param uploadedFile the uploaded resource.
      * @return a success status if succeeded, error otherwise.
      */
-    @RequestMapping(value="/uploadContentPartnerLogo/{cpId}", method = RequestMethod.POST)
-    public ResponseEntity<String> uploadContentPartnerLogo(@PathVariable("cpId") String cpId, @RequestParam("file") MultipartFile uploadedFile)  {
+    @RequestMapping(value="/uploadCpLogo/{cpId}", method = RequestMethod.POST)
+    public ResponseEntity<String> uploadCpLogo(@PathVariable("cpId") String cpId, @RequestParam("logo") MultipartFile uploadedFile)  {
         // By default upload the original resource
 
         logger.info("Uploading logo file [" + uploadedFile.getOriginalFilename() + "] of cp [" + cpId + "]");
@@ -324,18 +228,59 @@ public class RestAPIController {
         }
     }
 
-//    /**
-//     *  A post function that dowloads a list of media URLs files.
-//
-//     * @return a hash in json format of each URL and its path in storage layer concatenated with the download status.
-//     */
-//    @RequestMapping(value="/test", method = RequestMethod.POST)
-//    public ResponseEntity<String> test() {
-//
-//        System.out.println("in --------------------- fun --------------- ");
-//
-//        return new ResponseEntity<String>("teeeeeeeeeeeeeeeeeeeeeest", HttpStatus.OK);
-//
-//    }
+    /**
+     * A post function downloads logo of the content partner.
+     * @param cpId the unique id of the content partner.
+     * @return the reqired logo file.
+     */
+    @RequestMapping(value = "/downloadCpLogo/{cpId}", method = RequestMethod.GET)
+    public ResponseEntity<InputStreamResource> downloadCpLogo(@PathVariable("cpId") String cpId) {
+        try {
+           logger.info("Downloading logo file of content partner [" + cpId + "] ");
+            File logo = service.getCpLogo(contentPPath, cpId);
+            InputStreamResource resource;
+            // or use resource byte array
+//            Path path = Paths.get(file.getAbsolutePath());
+//            ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+            if(logo != null) {
+                resource = new InputStreamResource(new FileInputStream(logo));
+            } else {
+                logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadCpLogo(): Logo not found");
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
 
+            // uncomment if want the file as attachment
+//          headers.add("Content-disposition", "attachment;filename=" + file.getName().substring(4));
+            return ResponseEntity
+                    .ok()
+                    .headers(getHeaders(logo))
+                    .contentLength(logo.length())
+                    .contentType(
+                            MediaType.parseMediaType("application/octet-stream"))
+                    // uncomment if know the type of the resource and will open it in the browser & keep it inline content type too
+//                            .contentType(
+//                                    MediaType.parseMediaType("text/html"))
+                    .body(new InputStreamResource(resource.getInputStream()));
+        } catch(FileNotFoundException ex) {
+            logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadCpLogo():" + ex.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (IOException e) {
+            logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadCpLogo():" + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
+
+    private HttpHeaders getHeaders(File file) {
+        // prevent caching
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+        headers.add("Content-disposition", "inline;filename=" + file.getName());
+
+        return headers;
+    }
+
+
+
+}

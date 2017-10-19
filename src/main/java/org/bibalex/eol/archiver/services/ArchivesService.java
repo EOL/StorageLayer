@@ -55,7 +55,7 @@ public class ArchivesService {
                 Files.createDirectories(directoryPath);
                 Files.copy(uploadedFile.getInputStream(), filePath);
 
-                // TODO 
+                // TODO delete it
                 // create a duplicate DWCA until connectors are created
                 if(isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) {
                     Files.copy(uploadedFile.getInputStream(), Paths.get(basePath + File.separator + resId + File.separator + "core" + "_" + uploadedFile.getOriginalFilename()));
@@ -91,7 +91,7 @@ public class ArchivesService {
                         Files.copy(uploadedFile.getInputStream(), filePath);
                         logger.info("Resource (" + resId + ") is " + ((isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) ? "original " : "DWCA ") + "and already exists, it will be replaced.");
 
-                        // TODO
+                        // TODO delete it
                         // create a duplicate DWCA until connectors are created
                         if(isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) {
                             Files.copy(uploadedFile.getInputStream(), Paths.get(basePath + File.separator + resId + File.separator + "core" + "_" + uploadedFile.getOriginalFilename()));
@@ -264,24 +264,26 @@ public class ArchivesService {
     public boolean saveUploadedLogo(MultipartFile uploadedFile, String cpPath, String cpId) {
         try {
             boolean succeeded = true;
-            String fullPath = cpPath + File.separator + cpId + "_" + uploadedFile.getOriginalFilename();
+            String fullPath = cpPath + File.separator + cpId + File.separator + uploadedFile.getOriginalFilename();
             Path filePath = Paths.get(fullPath);
             logger.debug("Logo of (" + cpId + ") will be saved in (" + fullPath + ")");
-            File dir = new File(cpPath);
-            File[] files = dir.listFiles(new FilenameFilter() {
-                public boolean accept(File dir, String name) {
-                    return name.startsWith(cpId + "_");
-                }
-            });
 
-            // If there is another logo file
-            if(files != null && files.length > 0) {
-                File file = files[0];
-                if (!file.delete()) {
-                    logger.error("Content Partner has logo, but can't be deleted.");
-                    succeeded = false;
-                } else {
-                    logger.info("Content Partner has logo, it was deleted.");
+            if(Files.notExists(Paths.get(cpPath + File.separator + cpId)))
+                Files.createDirectories(Paths.get(cpPath + File.separator + cpId));
+            else {
+                File dir = new File(cpPath + File.separator + cpId);
+                File[] files = dir.listFiles();
+
+                // If there is another logo file
+                if (files != null && files.length > 0) {
+                    for (File file : files) {
+                        if (!file.delete()) {
+                            logger.error("Content Partner has logo, but can't be deleted.");
+                            succeeded = false;
+                        } else {
+                            logger.info("Content Partner has logo, it was deleted.");
+                        }
+                    }
                 }
             }
             Files.copy(uploadedFile.getInputStream(), filePath);
@@ -290,6 +292,26 @@ public class ArchivesService {
             logger.error("org.bibalex.eol.archiver.services.ArchivesService.saveUploadedLogo(): Failed to save file (" + uploadedFile.getOriginalFilename() +") of content partner ("
                     + cpId + "):" + e.getMessage());
             return false;
+        }
+    }
+
+    /**
+     * Loads the content partner logo.
+     * @param contentPPath the path of the content partners media
+     * @param cpId the content partner id
+     * @return the logo file
+     */
+    public File getCpLogo(String contentPPath, String cpId) {
+        if(Files.exists(Paths.get(contentPPath + File.separator + cpId))) {
+            File directory = new File(contentPPath + File.separator + cpId);
+            File[] listOfFiles = directory.listFiles();
+            if(listOfFiles != null && listOfFiles.length > 0) {
+                return listOfFiles[0];
+            } else {
+                return null;
+            }
+        } else {
+            return null;
         }
     }
 }

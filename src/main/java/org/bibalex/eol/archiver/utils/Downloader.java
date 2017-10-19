@@ -9,6 +9,8 @@ import java.io.*;
 import java.net.*;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.UUID;
 
 
@@ -82,57 +84,60 @@ public class Downloader {
         boolean success = true;
         HttpURLConnection httpConn = null;
         String encodedURL = encodeURL(fileURL);
-        String saveFilePath = null;
         logger.debug("URL:" + fileURL + " --> Encoded:" + encodedURL);
 
+        String saveFilePath = saveDir + encodedURL;
+        logger.debug("saveFilePath:" + saveFilePath);
+
+
         try {
-            logger.info("File (" + fileURL + ") to be downloaded");
-            url = new URL(fileURL);
-
-            httpConn = (HttpURLConnection) url.openConnection();
-            httpConn.setUseCaches(false);
-            httpConn.setDefaultUseCaches(false);
-            httpConn.setRequestProperty("Pragma", "no-cache");
-            httpConn.setRequestProperty("Expires", "0");
-
-            int responseCode = httpConn.getResponseCode();
-            // check HTTP response code first
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                // URL Extra Info
-//                String fileName = "";
-//                String disposition = httpConn.getHeaderField("Content-Disposition");
-//                String contentType = httpConn.getContentType();
-//                int contentLength = httpConn.getContentLength();
-//
-//                if (disposition != null) {
-//                    // extracts file name from header field
-//                    int index = disposition.indexOf("filename=");
-//                    if (index > 0) {
-//                        fileName = disposition.substring(index + 10,
-//                                disposition.length() - 1);
-//                    }
-//                } else {
-//                    // extracts file name from URL
-//                    fileName = getFileNameFromUrl(fileURL);
-//                }
-
-                // opens input stream from the HTTP connection
-                InputStream inputStream = httpConn.getInputStream();
-                saveFilePath = saveDir + encodedURL;
-
-                // TODO
-                // Check if directory exists
-
-                // saves the input stream of the file URL
-                saveURLStream(inputStream, saveFilePath);
-
-                logger.info("File (" + fileURL + ") is downloaded");
+            // Check if directory exists
+            if (Files.exists(Paths.get(saveFilePath))) {
+                logger.info("Media file already exists ..");
             } else {
-                success = false;
-                logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: No file to download. Server replied HTTP code: " + responseCode);
+                logger.info("File (" + fileURL + ") to be downloaded");
+                url = new URL(fileURL);
+
+                httpConn = (HttpURLConnection) url.openConnection();
+                httpConn.setUseCaches(false);
+                httpConn.setDefaultUseCaches(false);
+                httpConn.setRequestProperty("Pragma", "no-cache");
+                httpConn.setRequestProperty("Expires", "0");
+
+                int responseCode = httpConn.getResponseCode();
+                // check HTTP response code first
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    // URL Extra Info
+    //                String fileName = "";
+    //                String disposition = httpConn.getHeaderField("Content-Disposition");
+    //                String contentType = httpConn.getContentType();
+    //                int contentLength = httpConn.getContentLength();
+    //
+    //                if (disposition != null) {
+    //                    // extracts file name from header field
+    //                    int index = disposition.indexOf("filename=");
+    //                    if (index > 0) {
+    //                        fileName = disposition.substring(index + 10,
+    //                                disposition.length() - 1);
+    //                    }
+    //                } else {
+    //                    // extracts file name from URL
+    //                    fileName = getFileNameFromUrl(fileURL);
+    //                }
+
+                    // opens input stream from the HTTP connection
+                    InputStream inputStream = httpConn.getInputStream();
+
+
+                    // saves the input stream of the file URL
+                    saveURLStream(inputStream, saveFilePath);
+
+                    logger.info("File (" + fileURL + ") is downloaded");
+                } else {
+                    success = false;
+                    logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: No file to download. Server replied HTTP code: " + responseCode);
+                }
             }
-
-
         } catch (MalformedURLException e) {
             success = false;
             logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: " + e.getMessage());
@@ -144,7 +149,8 @@ public class Downloader {
             success = false;
             logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: " + e.getMessage());
         } finally {
-            httpConn.disconnect();
+            if(httpConn != null)
+                httpConn.disconnect();
         }
 
         return saveFilePath + "," + success;
