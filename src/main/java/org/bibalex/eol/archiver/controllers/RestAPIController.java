@@ -38,6 +38,9 @@ public class RestAPIController {
     private String contentPPath;
     private PropertiesFile app;
     private BA_Proxy proxy;
+    public static long maximumFileSize;
+
+
 
     @Autowired
     public void setApp(PropertiesFile app) {
@@ -49,6 +52,7 @@ public class RestAPIController {
         proxy = new BA_Proxy();
         this.basePath = app.getBasePath();
         this.contentPPath = app.getContentPPath();
+        this.maximumFileSize = app.getMaximumFileSize();
         proxy.setProxyExists((app.getProxyExists().equalsIgnoreCase("true")) ? true : false);
         proxy.setPort(app.getPort());
         proxy.setProxy(app.getProxy());
@@ -100,55 +104,7 @@ public class RestAPIController {
      * @param isOrg is "1" if the resource uploaded from the publishing layer, "0" if it was a DWCA resource.
      * @return the reqired resource file.
      */
-//    @RequestMapping(value = "/downloadResource/{resId}/{isOrg}", method = RequestMethod.GET)
-//    public ResponseEntity<InputStreamResource> downloadResource(@PathVariable("resId") String resId, @PathVariable("isOrg") String isOrg) {
-//        try {
-//            // By default upload the original resource
-//            if(! validResourceType(isOrg))
-//                isOrg = getDefaultResourceType();
-//
-//            logger.info("Downloading resource file [" + resId + "] which is " + ((isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) ? "original " : "DWCA "));
-//            File file = service.getResourceFile(basePath, resId, isOrg);
-//            InputStreamResource resource;
-//            // or use resource byte array
-////            Path path = Paths.get(file.getAbsolutePath());
-////            ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
-//            if(file != null) {
-//                resource = new InputStreamResource(new FileInputStream(file));
-//            } else {
-//                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//            }
-//
-//            // prevent caching
-//            HttpHeaders headers = new HttpHeaders();
-//            headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-//            headers.add("Pragma", "no-cache");
-//            headers.add("Expires", "0");
-//            if(file.getName().startsWith(Constants.ORG_START))
-//                headers.add("Content-disposition", "inline;filename=" + file.getName().substring(Constants.ORG_START.length() + 1).replaceAll(" ", "_"));
-//            else
-//                headers.add("Content-disposition", "inline;filename=" + file.getName().substring(Constants.CORE_START.length() + 1).replaceAll(" ", "_"));
-//
-//            // uncomment if want the file as attachment
-////          headers.add("Content-disposition", "attachment;filename=" + file.getName().substring(4));
-//            return ResponseEntity
-//                    .ok()
-//                    .headers(headers)
-//                    .contentLength(file.length())
-//                    .contentType(
-//                            MediaType.parseMediaType("application/octet-stream"))
-//                    // uncomment if know the type of the resource and will open it in the browser & keep it inline content type too
-////                            .contentType(
-////                                    MediaType.parseMediaType("text/html"))
-//                    .body(new InputStreamResource(resource.getInputStream()));
-//        } catch(FileNotFoundException ex) {
-//            logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadResource():" + ex.getMessage());
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        } catch (IOException e) {
-//            logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadResource():" + e.getMessage());
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
+
     @RequestMapping(value = "/downloadResource/{resId}/{isOrg}/{isNew}", method = RequestMethod.GET)
     public ResponseEntity<InputStreamResource> downloadResource(@PathVariable("resId") String resId, @PathVariable("isOrg") String isOrg, @PathVariable("isNew") String isNew) {
         try {
@@ -159,7 +115,7 @@ public class RestAPIController {
             logger.info("Downloading resource file [" + resId + "] which is " + ((isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) ? "original " : "DWCA "));
 //            File file = service.getResourceFile(basePath, resId, isOrg);
             File file = service.getResourceFile(basePath, resId, isOrg, isNew);
-            if (!file.exists())
+            if (file == null)
                 return (new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
             InputStreamResource resource;
@@ -205,6 +161,7 @@ public class RestAPIController {
     {
         logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadResource():" + e.getMessage());
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
 }
@@ -215,9 +172,59 @@ public class RestAPIController {
      * @param mediaURLs, a list of the media URLs in the format of "["url1", "url2", ..]"
      * @return a hash in json format of each URL and its path in storage layer concatenated with the download status.
      */
+//    @RequestMapping(value="/downloadMedia/{resId}", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+//    public ResponseEntity<HashMap<String, String>> downloadMedia(@PathVariable("resId") String resId,
+//                                             @RequestBody List<String> mediaURLs) {
+//
+//        // TODO
+//        // uses UriComponentsBuilder, rest template to generate client
+//        logger.info("Downloading Media of resource (" + resId + ") ..");
+//
+//        long startT = System.currentTimeMillis();
+//        HashMap<String, String> resultList = new HashMap<String, String>();
+//
+//        try {
+//            String downloadMediaPath = basePath + File.separator + resId + File.separator + Constants.MEDIA_FOLDER + File.separator;
+//            Path mediaPth = Paths.get(downloadMediaPath);
+//
+//            if(Files.notExists(mediaPth)) {
+//                Files.createDirectories(mediaPth);
+//            }
+//
+//            resultList = service.downloadMedia(mediaURLs, proxy, app.getThreadsCount(), downloadMediaPath);
+//            logger.info("Time consumed for media of resource (" + resId + "):" + (System.currentTimeMillis() - startT) + " ms");
+//
+//            logger.debug("Downloaded URLS:'");
+//            resultList.forEach((k,v) -> {
+//                logger.debug("URL: (" + k + ") --> (" + v + ")");
+//            });
+//            if(resultList.size() == 0) {
+//                logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadMedia(): error during download threads.");
+//                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//            }
+//
+//            // prevent caching
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+//            headers.add("Pragma", "no-cache");
+//            headers.add("Expires", "0");
+//
+//            return ResponseEntity
+//                    .ok()
+//                    .headers(headers)
+//                    .contentType(
+//                            MediaType.parseMediaType("application/json"))
+//                    .body(resultList);
+//        } catch (IOException e) {
+//            logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadMedia(): error in creating media folder: " + e.getMessage());
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//
+//    }
+
     @RequestMapping(value="/downloadMedia/{resId}", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public ResponseEntity<HashMap<String, String>> downloadMedia(@PathVariable("resId") String resId,
-                                             @RequestBody List<String> mediaURLs) {
+                                                                 @RequestBody List<String> mediaURLs) {
 
         // TODO
         // uses UriComponentsBuilder, rest template to generate client
@@ -228,10 +235,10 @@ public class RestAPIController {
 
         try {
             String downloadMediaPath = basePath + File.separator + resId + File.separator + Constants.MEDIA_FOLDER + File.separator;
-            Path mediaPth = Paths.get(downloadMediaPath);
+            Path mediaPath = Paths.get(downloadMediaPath);
 
-            if(Files.notExists(mediaPth)) {
-                Files.createDirectories(mediaPth);
+            if(Files.notExists(mediaPath)) {
+                Files.createDirectories(mediaPath);
             }
 
             resultList = service.downloadMedia(mediaURLs, proxy, app.getThreadsCount(), downloadMediaPath);

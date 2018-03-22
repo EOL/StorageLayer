@@ -15,6 +15,7 @@ public class PropertiesFile {
     private String proxy;
     private String port;
     private int threadsCount;
+    private long maximumFileSize;
 
     public int getThreadsCount() {
         return threadsCount;
@@ -79,5 +80,9 @@ public class PropertiesFile {
     public void setContentPPath(String contentPPath) {
         this.contentPPath = contentPPath;
     }
+
+    public void setMaximumFileSize(long maximumFileSize){this.maximumFileSize = maximumFileSize;}
+
+    public long getMaximumFileSize(){return maximumFileSize;}
 
 }

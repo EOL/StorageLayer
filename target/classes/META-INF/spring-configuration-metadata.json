@@ -20,6 +20,12 @@
     },
     {
       "sourceType": "org.bibalex.eol.archiver.Components.PropertiesFile",
+      "defaultValue": 0,
+      "name": "maximum-file-size",
+      "type": "java.lang.Long"
+    },
+    {
+      "sourceType": "org.bibalex.eol.archiver.Components.PropertiesFile",
       "name": "password",
       "type": "java.lang.String"
     },
