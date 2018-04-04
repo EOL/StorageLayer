@@ -145,43 +145,6 @@ public class ArchivesService {
      * @param isOrg    1 if the required file is the uploaded in the publishing layer, 0 if the required file is the DWCA
      * @return the required resource file.
      */
-//    public File getResourceFile(String basePath, String resId, String isOrg) throws IOException {
-//        File file = null;
-//        File dir = new File(basePath + File.separator + resId);
-//
-//        File[] orgFiles, coreFiles;
-//        coreFiles = dir.listFiles(new FilenameFilter() {
-//            public boolean accept(File dir, String name) {
-//                return name.startsWith(Constants.CORE_START + "_");
-//            }
-//        });
-//        if (!isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE) && coreFiles.length != 0) {
-//            // Core file
-//            file = coreFiles[0];
-//            logger.info("Downloading DWCA file [" + file.getName() + "] of resource [" + resId + "] ..");
-//        } else {
-//            orgFiles = dir.listFiles(new FilenameFilter() {
-//                public boolean accept(File dir, String name) {
-//                    return name.startsWith(Constants.ORG_START + "_");
-//                }
-//            });
-//
-//            if (orgFiles.length == 0) {
-//                logger.error("org.bibalex.eol.archiver.services.ArchivesService.getResourceFile(): No org resource to download.");
-//            } else {
-//                file = orgFiles[0];
-//                // Input stream resource
-//                if (isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE))
-//                    logger.info("Downloading original file [" + file.getName() + "] of resource [" + resId + "] ..");
-//                else {
-//                    logger.info("Downloading DWCA file [" + file.getName() + "] of resource [" + resId + "] .. But it doesn't exist so original will be downloaded.");
-//                    // uncomment if want to not download original when core is required
-////                    file = null;
-//                }
-//            }
-//        }
-//        return file;
-//    }
 
     public File getResourceFile(String basePath, String resId, String isOrg, String isNew) {
         File file = null,
@@ -240,10 +203,11 @@ public class ArchivesService {
      * @param mediaURLs     a list of the URLs to be downloaded.
      * @param proxySettings an object contains the settings of the server proxy.
      * @param threadsCount  the number of threads required to do the download process. If it is 1 it will be serial.
-     * @param dir           the dircetory where to save the downloaded media.
+     * @param dir           the directory where to save the downloaded media.
+     * @param expectedMediaFormat
      * @return a hash list of the each URL and its path concatenated with the downloaded status.
      */
-    public HashMap<String, String> downloadMedia(List<String> mediaURLs, BA_Proxy proxySettings, int threadsCount, String dir) {
+    public HashMap<String, String> downloadMedia(List<String> mediaURLs, BA_Proxy proxySettings, int threadsCount, String dir, List<String> expectedMediaFormat) {
         HashMap<String, String> resultList = new HashMap<String, String>();
         Downloader downloader = new Downloader(proxySettings);
 
@@ -257,7 +221,7 @@ public class ArchivesService {
             int end = size;
             ArrayList<Future> resultedThreadsList = new ArrayList<Future>();
             for (int i = 0; i < threadsCount; i++) {
-                resultedThreadsList.add(executeDownloadThread(threadPoolExecutor, mediaURLs, downloader, start, end, dir));
+                resultedThreadsList.add(executeDownloadThread(threadPoolExecutor, mediaURLs, downloader, start, end, dir, expectedMediaFormat));
                 start = end;
                 end += size;
                 if (end > mediaURLs.size())
@@ -281,7 +245,7 @@ public class ArchivesService {
         } else {
             // sequential Download
             mediaURLs.stream().forEach(url -> {
-                resultList.put(url, downloader.downloadFromUrl(url, dir));
+                resultList.put(url, downloader.downloadFromUrl(url, dir, expectedMediaFormat.get(mediaURLs.indexOf(url))));
             });
         }
         return resultList;
@@ -299,13 +263,13 @@ public class ArchivesService {
      * @param dir                the directory to save the URLs downloaded files.
      * @return a future result of the path and download status.
      */
-    private Future executeDownloadThread(ThreadPoolExecutor threadPoolExecutor, List<String> mediaURLs, Downloader downloader, int start, int end, String dir) {
+    private Future executeDownloadThread(ThreadPoolExecutor threadPoolExecutor, List<String> mediaURLs, Downloader downloader, int start, int end, String dir, List<String> expectedMediaFormat) {
         Future threadResult = threadPoolExecutor.submit(new Callable<HashMap<String, String>>() {
             @Override
             public HashMap<String, String> call() throws Exception {
                 HashMap<String, String> result = new HashMap<String, String>();
                 mediaURLs.subList(start, end).stream().forEach(url -> {
-                    result.put(url, downloader.downloadFromUrl(url, dir));
+                    result.put(url, downloader.downloadFromUrl(url, dir, expectedMediaFormat.get(mediaURLs.indexOf(url))));
                 });
                 return result;
             }

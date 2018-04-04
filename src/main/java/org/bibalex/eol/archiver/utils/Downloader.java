@@ -1,12 +1,11 @@
 package org.bibalex.eol.archiver.utils;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.bibalex.eol.archiver.Components.PropertiesFile;
+import org.apache.tika.Tika;
 import org.bibalex.eol.archiver.controllers.RestAPIController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import model.BA_Proxy;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.*;
 import java.net.*;
@@ -14,7 +13,6 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Properties;
 import java.util.UUID;
 
 import static org.bibalex.eol.archiver.controllers.RestAPIController.maximumFileSize;
@@ -29,24 +27,17 @@ public class Downloader {
     private static final Logger logger = LoggerFactory.getLogger(RestAPIController.class);
     private BA_Proxy proxy;
     private static final int BUFFER_SIZE = 4096; //4MG or 8192 8MG
+
     public Downloader(BA_Proxy proxy) {
         this.proxy = proxy;
         setProxy();
     }
 
-
-    private PropertiesFile app;
-    public void setApp(PropertiesFile app) {
-        this.app = app;
-    }
-
-
-
     /**
      * Sets up the storage layer proxy settings, if exist
      */
     private void setProxy() {
-        if(proxy.isProxyExists()) {
+        if (proxy.isProxyExists()) {
             System.setProperty("http.proxyHost", proxy.getProxy());
             System.setProperty("http.proxyPort", proxy.getPort());
             System.setProperty("https.proxyHost", proxy.getProxy());
@@ -72,6 +63,7 @@ public class Downloader {
 
     /**
      * Extracts the file name of the uploaded URL
+     *
      * @param url the input file URL
      * @return the name of the file, if exist. Otherwise it will generate a name consisting of the current timestamp
      */
@@ -89,88 +81,12 @@ public class Downloader {
 
     /**
      * Downloads the file from the input URL and saves it in the input directory.
+     *
      * @param fileURL the URL of the file.
      * @param saveDir the directory where to save the downloaded URL.
      * @return a string of both the new file directory and the uploading status separated by ,
      */
-//    public String downloadFromUrl(String fileURL, String saveDir) {
-//        URL url = null;
-//        boolean success = true;
-//        HttpURLConnection httpConn = null;
-//        String encodedURL = encodeURL(fileURL);
-//        logger.debug("URL:" + fileURL + " --> Encoded:" + encodedURL);
-//
-//        String saveFilePath = saveDir + encodedURL;
-//        logger.debug("saveFilePath:" + saveFilePath);
-//
-//
-//        try {
-//            // Check if directory exists
-//            if (Files.exists(Paths.get(saveFilePath))) {
-//                logger.info("Media file already exists ..");
-//            } else {
-//                logger.info("File (" + fileURL + ") to be downloaded");
-//                url = new URL(fileURL);
-//
-//                httpConn = (HttpURLConnection) url.openConnection();
-//                httpConn.setUseCaches(false);
-//                httpConn.setDefaultUseCaches(false);
-//                httpConn.setRequestProperty("Pragma", "no-cache");
-//                httpConn.setRequestProperty("Expires", "0");
-//
-//                int responseCode = httpConn.getResponseCode();
-//                // check HTTP response code first
-//                if (responseCode == HttpURLConnection.HTTP_OK) {
-//                    // URL Extra Info
-//    //                String fileName = "";
-//    //                String disposition = httpConn.getHeaderField("Content-Disposition");
-//    //                String contentType = httpConn.getContentType();
-//    //                int contentLength = httpConn.getContentLength();
-//    //
-//    //                if (disposition != null) {
-//    //                    // extracts file name from header field
-//    //                    int index = disposition.indexOf("filename=");
-//    //                    if (index > 0) {
-//    //                        fileName = disposition.substring(index + 10,
-//    //                                disposition.length() - 1);
-//    //                    }
-//    //                } else {
-//    //                    // extracts file name from URL
-//    //                    fileName = getFileNameFromUrl(fileURL);
-//    //                }
-//
-//                    // opens input stream from the HTTP connection
-//                    InputStream inputStream = httpConn.getInputStream();
-//
-//
-//                    // saves the input stream of the file URL
-//                    saveURLStream(inputStream, saveFilePath);
-//
-//                    logger.info("File (" + fileURL + ") is downloaded");
-//                } else {
-//                    success = false;
-//                    logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: No file to download. Server replied HTTP code: " + responseCode);
-//                }
-//            }
-//        } catch (MalformedURLException e) {
-//            success = false;
-//            logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: " + e.getMessage());
-//            ExceptionUtils.getStackTrace(e);
-//        } catch (FileNotFoundException e) {
-//            success = false;
-//            logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: " + e.getMessage());
-//        } catch (IOException e) {
-//            success = false;
-//            logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: " + e.getMessage());
-//        } finally {
-//            if(httpConn != null)
-//                httpConn.disconnect();
-//        }
-//
-//        return saveFilePath + "," + success;
-//    }
-
-    public String downloadFromUrl(String fileURL, String saveDir) {
+    public String downloadFromUrl(String fileURL, String saveDir, String type) {
 
 
         URL url = null;
@@ -190,7 +106,7 @@ public class Downloader {
             } else {
                 logger.info("File (" + fileURL + ") to be downloaded");
                 url = new URL(fileURL);
-
+                
                 httpConn = (HttpURLConnection) url.openConnection();
                 httpConn.setUseCaches(false);
                 httpConn.setDefaultUseCaches(false);
@@ -218,40 +134,47 @@ public class Downloader {
                     //                    fileName = getFileNameFromUrl(fileURL);
                     //                }
 
-                            long contentLength = Long.valueOf(httpConn.getContentLength());
-                            System.out.println("XXXXXXXXXXX\t"+maximumFileSize+"\tXXXXXXXXXXX");
-                            if(contentLength < maximumFileSize){
-                                // opens input stream from the HTTP connection
-                                InputStream inputStream = httpConn.getInputStream();
-                                // saves the input stream of the file URL
-                                saveURLStream(inputStream, saveFilePath);
+                    String responseContentType = httpConn.getContentType();
+                    Tika fileTypeDetector = new Tika();
+                    String requestContentType = fileTypeDetector.detect(url);
+                    if ((!(responseContentType.equalsIgnoreCase(requestContentType))) || (!(responseContentType.equalsIgnoreCase(type))&&(!(type.equalsIgnoreCase(""))))) {
+                        logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: Expected Media Format mismatch");
+                        success = false;
+                        return saveFilePath + ", " + success;
+                    } else {
+                        long contentLength = Long.valueOf(httpConn.getContentLength());
+                        if (contentLength < maximumFileSize) {
+                            // opens input stream from the HTTP connection
+                            InputStream inputStream = httpConn.getInputStream();
+                            // saves the input stream of the file URL
+                            saveURLStream(inputStream, saveFilePath);
 
-                                logger.info("File (" + fileURL + ") is downloaded");}
-                            else{
-                                logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: Media File is too large to download; Download Aborted\nPlease select a file smaller than "+maximumFileSize/1024+" KB");
-                                success = false;
-                                return saveFilePath+", "+success;
-                            }
-
-
-
+                            logger.info("File (" + fileURL + ") is downloaded");
+                        } else {
+                            logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: Media File is too large to download; Download Aborted\nPlease select a file smaller than " + maximumFileSize / 1024 + " KB");
+                            success = false;
+                            return saveFilePath + ", " + success;
+                        }
+                    }
                 } else {
                     success = false;
                     logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: No file to download. Server replied HTTP code: " + responseCode);
                 }
             }
-        } catch (MalformedURLException e) {
+        }
+        catch (MalformedURLException e) {
             success = false;
             logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: " + e.getMessage());
             ExceptionUtils.getStackTrace(e);
-        } catch (FileNotFoundException e) {
+        }
+ catch (FileNotFoundException e) {
             success = false;
             logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: " + e.getMessage());
         } catch (IOException e) {
             success = false;
             logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: " + e.getMessage());
         } finally {
-            if(httpConn != null)
+            if (httpConn != null)
                 httpConn.disconnect();
         }
 
@@ -260,6 +183,7 @@ public class Downloader {
 
     /**
      * Encodes the url string to another name to be saved with it.
+     *
      * @param url the input URL.
      * @return the encoded string
      */
@@ -269,7 +193,8 @@ public class Downloader {
 
     /**
      * Saves the downloaded input stream into file.
-     * @param inputStream the input URL stream.
+     *
+     * @param inputStream  the input URL stream.
      * @param saveFilePath the directory where to save the file.
      * @throws IOException
      */

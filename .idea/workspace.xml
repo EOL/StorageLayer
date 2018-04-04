@@ -1,86 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/utils/Downloader.java" line="294" />
+    <bookmark url="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/utils/Downloader.java" line="219" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="61fdf314-736b-4a32-9483-2d7e386fc455" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0.war" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0.war.original" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/classes/META-INF/spring-configuration-metadata.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/classes/application.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/classes/model/BA_Proxy.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/classes/org/bibalex/eol/archiver/ArchiverApp.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/classes/org/bibalex/eol/archiver/Components/PropertiesFile.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/classes/org/bibalex/eol/archiver/controllers/RestAPIController.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/classes/org/bibalex/eol/archiver/services/ArchivesService$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/classes/org/bibalex/eol/archiver/services/ArchivesService$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/classes/org/bibalex/eol/archiver/services/ArchivesService$3.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/classes/org/bibalex/eol/archiver/services/ArchivesService$4.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/classes/org/bibalex/eol/archiver/services/ArchivesService$5.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/classes/org/bibalex/eol/archiver/services/ArchivesService.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/classes/org/bibalex/eol/archiver/utils/Constants.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/classes/org/bibalex/eol/archiver/utils/Downloader$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/classes/org/bibalex/eol/archiver/utils/Downloader.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/classes/org/bibalex/eol/archiver/utils/FileManager.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/classes/templates/upload.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/android-json-0.0.20131108.vaadin1.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/classmate-1.3.3.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/commons-io-2.5.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/commons-lang3-3.6.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/evo-inflector-1.2.1.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/groovy-2.4.9.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/hibernate-validator-5.3.4.Final.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/jackson-annotations-2.8.0.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/jackson-core-2.8.7.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/jackson-databind-2.8.7.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/javassist-3.21.0-GA.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/jboss-logging-3.3.0.Final.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/jcl-over-slf4j-1.7.24.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/jul-to-slf4j-1.7.24.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/log4j-api-2.7.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/log4j-core-2.7.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/log4j-slf4j-impl-2.7.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/mysql-connector-java-5.1.41.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/ognl-3.0.8.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/slf4j-api-1.7.24.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/snakeyaml-1.17.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/spring-aop-4.3.7.RELEASE.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/spring-beans-4.3.7.RELEASE.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/spring-boot-1.5.2.RELEASE.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/spring-boot-autoconfigure-1.5.2.RELEASE.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/spring-boot-starter-1.5.2.RELEASE.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/spring-boot-starter-data-rest-1.5.2.RELEASE.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/spring-boot-starter-log4j2-1.5.2.RELEASE.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/spring-boot-starter-thymeleaf-1.5.2.RELEASE.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/spring-boot-starter-web-1.5.2.RELEASE.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/spring-context-4.3.7.RELEASE.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/spring-core-4.3.7.RELEASE.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/spring-data-commons-1.13.1.RELEASE.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/spring-data-rest-core-2.6.1.RELEASE.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/spring-data-rest-webmvc-2.6.1.RELEASE.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/spring-expression-4.3.7.RELEASE.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/spring-hateoas-0.23.0.RELEASE.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/spring-plugin-core-1.2.0.RELEASE.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/spring-tx-4.3.7.RELEASE.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/spring-web-4.3.7.RELEASE.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/spring-webmvc-4.3.7.RELEASE.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/thymeleaf-2.1.5.RELEASE.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/thymeleaf-layout-dialect-1.4.0.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/thymeleaf-spring4-2.1.5.RELEASE.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/unbescape-1.1.0.RELEASE.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/storage-layer-1.0/WEB-INF/lib/validation-api-1.1.0.Final.jar" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/Components/PropertiesFile.class" afterPath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/Components/PropertiesFile.class" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_asm_asm_5_0_3.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/controllers/RestAPIController.class" afterPath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/controllers/RestAPIController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/services/ArchivesService$3.class" afterPath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/services/ArchivesService$3.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/services/ArchivesService$4.class" afterPath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/services/ArchivesService$4.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/services/ArchivesService$5.class" afterPath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/services/ArchivesService$5.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/services/ArchivesService.class" afterPath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/services/ArchivesService.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/utils/Downloader$1.class" afterPath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/utils/Downloader$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/utils/Downloader.class" afterPath="$PROJECT_DIR$/target/classes/org/bibalex/eol/archiver/utils/Downloader.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/Components/PropertiesFile.java" afterPath="$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/Components/PropertiesFile.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/controllers/RestAPIController.java" afterPath="$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/controllers/RestAPIController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/services/ArchivesService.java" afterPath="$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/services/ArchivesService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/utils/Downloader.java" afterPath="$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/utils/Downloader.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/META-INF/spring-configuration-metadata.json" afterPath="$PROJECT_DIR$/target/classes/META-INF/spring-configuration-metadata.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/application.properties" afterPath="$PROJECT_DIR$/target/classes/application.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/storagelayer.iml" afterPath="$PROJECT_DIR$/storagelayer.iml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -102,8 +40,8 @@
       <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
-              <caret line="11" column="12" lean-forward="false" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+            <state relative-caret-position="1854">
+              <caret line="103" column="0" lean-forward="false" selection-start-line="103" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -112,36 +50,42 @@
       <file leaf-file-name="Downloader.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/utils/Downloader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="272" column="27" lean-forward="false" selection-start-line="272" selection-start-column="27" selection-end-line="272" selection-end-column="27" />
+            <state relative-caret-position="-1110">
+              <caret line="108" column="16" lean-forward="false" selection-start-line="108" selection-start-column="16" selection-end-line="108" selection-end-column="16" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1112#1113#0" expanded="true" />
-                <element signature="e#1142#1143#0" expanded="true" />
-                <element signature="e#7941#7958#0" expanded="false" />
+                <element signature="e#4206#4223#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BA_Proxy.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/model/BA_Proxy.java">
+      <file leaf-file-name="ArchivesService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/services/ArchivesService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="37" column="18" lean-forward="false" selection-start-line="37" selection-start-column="18" selection-end-line="37" selection-end-column="18" />
+            <state relative-caret-position="-1596">
+              <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
               <folding>
-                <element signature="e#741#742#0" expanded="true" />
-                <element signature="e#769#770#0" expanded="true" />
+                <element signature="method#ArchivesService#0;class#ArchivesService#0" expanded="false" />
+                <element signature="method#saveUploadedArchive#0;class#ArchivesService#0" expanded="false" />
+                <element signature="method#getResourceFile#0;class#ArchivesService#0" expanded="false" />
+                <element signature="docComment;method#copyFile#0;class#ArchivesService#0" expanded="false" />
+                <element signature="method#copyFile#0;class#ArchivesService#0" expanded="false" />
+                <element signature="docComment;method#executeDownloadThread#0;class#ArchivesService#0" expanded="false" />
+                <element signature="docComment;method#saveUploadedLogo#0;class#ArchivesService#0" expanded="false" />
+                <element signature="method#saveUploadedLogo#0;class#ArchivesService#0" expanded="false" />
+                <element signature="docComment;method#getCpLogo#0;class#ArchivesService#0" expanded="false" />
+                <element signature="method#getCpLogo#0;class#ArchivesService#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FileManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/utils/FileManager.java">
+      <file leaf-file-name="application.properties" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1098">
-              <caret line="68" column="0" lean-forward="false" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+            <state relative-caret-position="18">
+              <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -150,14 +94,13 @@
       <file leaf-file-name="RestAPIController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/controllers/RestAPIController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="40" column="18" lean-forward="false" selection-start-line="40" selection-start-column="18" selection-end-line="40" selection-end-column="18" />
+            <state relative-caret-position="1806">
+              <caret line="195" column="24" lean-forward="false" selection-start-line="195" selection-start-column="24" selection-end-line="195" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#validResourceType#0;class#RestAPIController#0" expanded="false" />
                 <element signature="docComment;method#downloadResource#0;class#RestAPIController#0" expanded="false" />
                 <element signature="method#downloadResource#0;class#RestAPIController#0" expanded="false" />
-                <element signature="docComment;method#downloadMedia#0;class#RestAPIController#0" expanded="false" />
                 <element signature="docComment;method#uploadCpLogo#0;class#RestAPIController#0" expanded="false" />
                 <element signature="method#uploadCpLogo#0;class#RestAPIController#0" expanded="false" />
                 <element signature="docComment;method#downloadCpLogo#0;class#RestAPIController#0" expanded="false" />
@@ -168,68 +111,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PropertiesFile.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/Components/PropertiesFile.java">
+      <file leaf-file-name="MediaType.class" pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/4.3.7.RELEASE/spring-web-4.3.7.RELEASE.jar!/org/springframework/http/MediaType.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="500">
-              <caret line="85" column="16" lean-forward="false" selection-start-line="85" selection-start-column="16" selection-end-line="85" selection-end-column="16" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ArchiverApp.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/ArchiverApp.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
-              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="application.properties" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="33" column="45" lean-forward="false" selection-start-line="33" selection-start-column="45" selection-end-line="33" selection-end-column="45" />
+            <state relative-caret-position="2538">
+              <caret line="177" column="28" lean-forward="false" selection-start-line="177" selection-start-column="28" selection-end-line="177" selection-end-column="28" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Constants.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/utils/Constants.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="9" column="25" lean-forward="false" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ArchivesService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/services/ArchivesService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="263" column="43" lean-forward="false" selection-start-line="263" selection-start-column="43" selection-end-line="263" selection-end-column="43" />
-              <folding>
-                <element signature="method#ArchivesService#0;class#ArchivesService#0" expanded="false" />
-                <element signature="method#saveUploadedArchive#0;class#ArchivesService#0" expanded="false" />
-                <element signature="docComment;method#getResourceFile#0;class#ArchivesService#0" expanded="false" />
-                <element signature="method#getResourceFile#0;class#ArchivesService#0" expanded="false" />
-                <element signature="docComment;method#copyFile#0;class#ArchivesService#0" expanded="false" />
-                <element signature="method#copyFile#0;class#ArchivesService#0" expanded="false" />
-                <element signature="docComment;method#executeDownloadThread#0;class#ArchivesService#0" expanded="false" />
-                <element signature="docComment;method#saveUploadedLogo#0;class#ArchivesService#0" expanded="false" />
-                <element signature="method#saveUploadedLogo#0;class#ArchivesService#0" expanded="false" />
-                <element signature="docComment;method#getCpLogo#0;class#ArchivesService#0" expanded="false" />
-                <element signature="method#getCpLogo#0;class#ArchivesService#0" expanded="false" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -270,6 +157,10 @@
       <find>14</find>
       <find>response</find>
       <find>basePath</find>
+      <find>getContentType</find>
+      <find>getContentType()</find>
+      <find>guessContentTypeFromN</find>
+      <find>org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl:</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$</dir>
@@ -306,10 +197,10 @@
         <option value="$PROJECT_DIR$/src/main/java/model/Tester.java" />
         <option value="$PROJECT_DIR$/src/main/java/model/BA_Proxy.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/ArchiverApp.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/services/ArchivesService.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/Components/PropertiesFile.java" />
         <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/services/ArchivesService.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/controllers/RestAPIController.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/utils/Downloader.java" />
       </list>
@@ -351,13 +242,12 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="113" />
     <option name="y" value="27" />
     <option name="width" value="1920" />
     <option name="height" value="1053" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator currentView="AndroidView" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -371,10 +261,17 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
-      <pane id="AndroidView" />
-      <pane id="PackagesPane" />
+      <pane id="AndroidView">
+        <subPane>
+          <expand>
+            <path>
+              <item name="StorageLayer" type="1abcf292:AndroidViewProjectNode" />
+              <item name="storagelayer" type="1039202d:NonAndroidModuleNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -453,6 +350,9 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -813,13 +713,12 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32994652" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22536807" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3289183" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26490065" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22516556" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289183" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3178808" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17219251" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32915717" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18074866" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24973261" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -834,6 +733,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="combo" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32915717" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -871,7 +771,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="8" />
+      <option name="time" value="10" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -880,60 +780,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/utils/FileManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/Components/PropertiesFile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="7" column="24" lean-forward="false" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/ArchiverApp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1665">
-          <caret line="111" column="11" lean-forward="false" selection-start-line="111" selection-start-column="11" selection-end-line="111" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/controllers/RestAPIController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="40" column="22" lean-forward="false" selection-start-line="40" selection-start-column="19" selection-end-line="40" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#validResourceType#0;class#RestAPIController#0" expanded="false" />
-            <element signature="docComment;method#downloadResource#0;class#RestAPIController#0" expanded="false" />
-            <element signature="method#downloadResource#0;class#RestAPIController#0" expanded="false" />
-            <element signature="docComment;method#downloadMedia#0;class#RestAPIController#0" expanded="false" />
-            <element signature="docComment;method#uploadCpLogo#0;class#RestAPIController#0" expanded="false" />
-            <element signature="method#uploadCpLogo#0;class#RestAPIController#0" expanded="false" />
-            <element signature="docComment;method#downloadCpLogo#0;class#RestAPIController#0" expanded="false" />
-            <element signature="method#downloadCpLogo#0;class#RestAPIController#0" expanded="false" />
-            <element signature="method#getHeaders#0;class#RestAPIController#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/upload.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -945,7 +791,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -956,7 +801,6 @@
           <folding>
             <element signature="method#ArchivesService#0;class#ArchivesService#0" expanded="false" />
             <element signature="method#saveUploadedArchive#0;class#ArchivesService#0" expanded="false" />
-            <element signature="docComment;method#getResourceFile#0;class#ArchivesService#0" expanded="false" />
             <element signature="method#getResourceFile#0;class#ArchivesService#0" expanded="false" />
             <element signature="docComment;method#copyFile#0;class#ArchivesService#0" expanded="false" />
             <element signature="method#copyFile#0;class#ArchivesService#0" expanded="false" />
@@ -981,7 +825,7 @@
         <state relative-caret-position="210">
           <caret line="19" column="23" lean-forward="false" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -990,9 +834,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1013,7 +854,6 @@
             <element signature="method#validResourceType#0;class#RestAPIController#0" expanded="false" />
             <element signature="docComment;method#downloadResource#0;class#RestAPIController#0" expanded="false" />
             <element signature="method#downloadResource#0;class#RestAPIController#0" expanded="false" />
-            <element signature="docComment;method#downloadMedia#0;class#RestAPIController#0" expanded="false" />
             <element signature="docComment;method#uploadCpLogo#0;class#RestAPIController#0" expanded="false" />
             <element signature="method#uploadCpLogo#0;class#RestAPIController#0" expanded="false" />
             <element signature="docComment;method#downloadCpLogo#0;class#RestAPIController#0" expanded="false" />
@@ -1027,7 +867,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1038,7 +877,6 @@
           <folding>
             <element signature="method#ArchivesService#0;class#ArchivesService#0" expanded="false" />
             <element signature="method#saveUploadedArchive#0;class#ArchivesService#0" expanded="false" />
-            <element signature="docComment;method#getResourceFile#0;class#ArchivesService#0" expanded="false" />
             <element signature="method#getResourceFile#0;class#ArchivesService#0" expanded="false" />
             <element signature="docComment;method#copyFile#0;class#ArchivesService#0" expanded="false" />
             <element signature="method#copyFile#0;class#ArchivesService#0" expanded="false" />
@@ -1063,7 +901,7 @@
         <state relative-caret-position="210">
           <caret line="19" column="23" lean-forward="false" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1072,9 +910,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1095,7 +930,6 @@
             <element signature="method#validResourceType#0;class#RestAPIController#0" expanded="false" />
             <element signature="docComment;method#downloadResource#0;class#RestAPIController#0" expanded="false" />
             <element signature="method#downloadResource#0;class#RestAPIController#0" expanded="false" />
-            <element signature="docComment;method#downloadMedia#0;class#RestAPIController#0" expanded="false" />
             <element signature="docComment;method#uploadCpLogo#0;class#RestAPIController#0" expanded="false" />
             <element signature="method#uploadCpLogo#0;class#RestAPIController#0" expanded="false" />
             <element signature="docComment;method#downloadCpLogo#0;class#RestAPIController#0" expanded="false" />
@@ -1109,7 +943,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1120,7 +953,6 @@
           <folding>
             <element signature="method#ArchivesService#0;class#ArchivesService#0" expanded="false" />
             <element signature="method#saveUploadedArchive#0;class#ArchivesService#0" expanded="false" />
-            <element signature="docComment;method#getResourceFile#0;class#ArchivesService#0" expanded="false" />
             <element signature="method#getResourceFile#0;class#ArchivesService#0" expanded="false" />
             <element signature="docComment;method#copyFile#0;class#ArchivesService#0" expanded="false" />
             <element signature="method#copyFile#0;class#ArchivesService#0" expanded="false" />
@@ -1145,7 +977,7 @@
         <state relative-caret-position="210">
           <caret line="19" column="23" lean-forward="false" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1154,9 +986,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1251,18 +1080,156 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
           <caret line="7" column="12" lean-forward="false" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/utils/Constants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="25" lean-forward="false" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/model/BA_Proxy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="37" column="18" lean-forward="false" selection-start-line="37" selection-start-column="18" selection-end-line="37" selection-end-column="18" />
+          <folding>
+            <element signature="e#741#742#0" expanded="false" />
+            <element signature="e#769#770#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/Components/PropertiesFile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="936">
+          <caret line="85" column="16" lean-forward="false" selection-start-line="85" selection-start-column="16" selection-end-line="85" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/ArchiverApp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/utils/FileManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1098">
+          <caret line="68" column="0" lean-forward="false" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///opt/java/jdk1.8.0_101/jre/lib/rt.jar!/sun/net/www/MimeTable.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="20" column="13" lean-forward="false" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///opt/java/jdk1.8.0_101/src.zip!/java/net/FileNameMap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="23" column="3" lean-forward="false" selection-start-line="23" selection-start-column="3" selection-end-line="23" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///opt/java/jdk1.8.0_101/jre/lib/rt.jar!/javax/activation/MimetypesFileTypeMap.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3870">
+          <caret line="226" column="31" lean-forward="false" selection-start-line="226" selection-start-column="31" selection-end-line="226" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1854">
+          <caret line="103" column="0" lean-forward="false" selection-start-line="103" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///opt/java/jdk1.8.0_101/src.zip!/java/net/URLConnection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1476">
+          <caret line="313" column="38" lean-forward="false" selection-start-line="313" selection-start-column="38" selection-end-line="313" selection-end-column="38" />
+          <folding>
+            <element signature="docComment;field#connected#0;class#URLConnection#0" expanded="false" />
+            <element signature="docComment;field#connectTimeout#0;class#URLConnection#0" expanded="false" />
+            <element signature="docComment;field#requests#0;class#URLConnection#0" expanded="false" />
+            <element signature="docComment;field#fileNameMap#0;class#URLConnection#0" expanded="false" />
+            <element signature="docComment;field#fileNameMapLoaded#0;class#URLConnection#0" expanded="false" />
+            <element signature="docComment;method#getFileNameMap#0;class#URLConnection#0" expanded="false" />
+            <element signature="e#11178#11179#0" expanded="false" />
+            <element signature="e#11248#11249#0" expanded="false" />
+            <element signature="method#setFileNameMap#0;class#URLConnection#0" expanded="false" />
+            <element signature="docComment;method#connect#0;class#URLConnection#0" expanded="false" />
+            <element signature="docComment;method#setConnectTimeout#0;class#URLConnection#0" expanded="false" />
+            <element signature="method#setConnectTimeout#0;class#URLConnection#0" expanded="false" />
+            <element signature="docComment;method#getConnectTimeout#0;class#URLConnection#0" expanded="false" />
+            <element signature="docComment;method#getLastModified#0;class#URLConnection#0" expanded="false" />
+            <element signature="method#getHeaderFieldInt#0;class#URLConnection#0" expanded="false" />
+            <element signature="docComment;method#getHeaderFieldLong#0;class#URLConnection#0" expanded="false" />
+            <element signature="method#getHeaderFieldLong#0;class#URLConnection#0" expanded="false" />
+            <element signature="docComment;method#getHeaderFieldDate#0;class#URLConnection#0" expanded="false" />
+            <element signature="method#getHeaderFieldDate#0;class#URLConnection#0" expanded="false" />
+            <element signature="docComment;method#getHeaderFieldKey#0;class#URLConnection#0" expanded="false" />
+            <element signature="docComment;method#getHeaderField#1;class#URLConnection#0" expanded="false" />
+            <element signature="docComment;method#getContent#0;class#URLConnection#0" expanded="false" />
+            <element signature="docComment;method#addRequestProperty#0;class#URLConnection#0" expanded="false" />
+            <element signature="method#addRequestProperty#0;class#URLConnection#0" expanded="false" />
+            <element signature="docComment;method#getRequestProperty#0;class#URLConnection#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/4.3.7.RELEASE/spring-web-4.3.7.RELEASE.jar!/org/springframework/http/MediaType.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2538">
+          <caret line="177" column="28" lean-forward="false" selection-start-line="177" selection-start-column="28" selection-end-line="177" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/controllers/RestAPIController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1806">
+          <caret line="195" column="24" lean-forward="false" selection-start-line="195" selection-start-column="24" selection-end-line="195" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#validResourceType#0;class#RestAPIController#0" expanded="false" />
+            <element signature="docComment;method#downloadResource#0;class#RestAPIController#0" expanded="false" />
+            <element signature="method#downloadResource#0;class#RestAPIController#0" expanded="false" />
+            <element signature="docComment;method#uploadCpLogo#0;class#RestAPIController#0" expanded="false" />
+            <element signature="method#uploadCpLogo#0;class#RestAPIController#0" expanded="false" />
+            <element signature="docComment;method#downloadCpLogo#0;class#RestAPIController#0" expanded="false" />
+            <element signature="method#downloadCpLogo#0;class#RestAPIController#0" expanded="false" />
+            <element signature="method#getHeaders#0;class#RestAPIController#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/services/ArchivesService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="263" column="43" lean-forward="false" selection-start-line="263" selection-start-column="43" selection-end-line="263" selection-end-column="43" />
+        <state relative-caret-position="-1596">
+          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
           <folding>
             <element signature="method#ArchivesService#0;class#ArchivesService#0" expanded="false" />
             <element signature="method#saveUploadedArchive#0;class#ArchivesService#0" expanded="false" />
-            <element signature="docComment;method#getResourceFile#0;class#ArchivesService#0" expanded="false" />
             <element signature="method#getResourceFile#0;class#ArchivesService#0" expanded="false" />
             <element signature="docComment;method#copyFile#0;class#ArchivesService#0" expanded="false" />
             <element signature="method#copyFile#0;class#ArchivesService#0" expanded="false" />
@@ -1275,97 +1242,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/Components/PropertiesFile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="500">
-          <caret line="85" column="16" lean-forward="false" selection-start-line="85" selection-start-column="16" selection-end-line="85" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/ArchiverApp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="33" column="45" lean-forward="false" selection-start-line="33" selection-start-column="45" selection-end-line="33" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/utils/Constants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="9" column="25" lean-forward="false" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="11" column="12" lean-forward="false" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/model/BA_Proxy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="37" column="18" lean-forward="false" selection-start-line="37" selection-start-column="18" selection-end-line="37" selection-end-column="18" />
-          <folding>
-            <element signature="e#741#742#0" expanded="true" />
-            <element signature="e#769#770#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/utils/FileManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1098">
-          <caret line="68" column="0" lean-forward="false" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/controllers/RestAPIController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="40" column="18" lean-forward="false" selection-start-line="40" selection-start-column="18" selection-end-line="40" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#validResourceType#0;class#RestAPIController#0" expanded="false" />
-            <element signature="docComment;method#downloadResource#0;class#RestAPIController#0" expanded="false" />
-            <element signature="method#downloadResource#0;class#RestAPIController#0" expanded="false" />
-            <element signature="docComment;method#downloadMedia#0;class#RestAPIController#0" expanded="false" />
-            <element signature="docComment;method#uploadCpLogo#0;class#RestAPIController#0" expanded="false" />
-            <element signature="method#uploadCpLogo#0;class#RestAPIController#0" expanded="false" />
-            <element signature="docComment;method#downloadCpLogo#0;class#RestAPIController#0" expanded="false" />
-            <element signature="method#downloadCpLogo#0;class#RestAPIController#0" expanded="false" />
-            <element signature="method#getHeaders#0;class#RestAPIController#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/bibalex/eol/archiver/utils/Downloader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="272" column="27" lean-forward="false" selection-start-line="272" selection-start-column="27" selection-end-line="272" selection-end-column="27" />
+        <state relative-caret-position="-1110">
+          <caret line="108" column="16" lean-forward="false" selection-start-line="108" selection-start-column="16" selection-end-line="108" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1112#1113#0" expanded="true" />
-            <element signature="e#1142#1143#0" expanded="true" />
-            <element signature="e#7941#7958#0" expanded="false" />
+            <element signature="e#4206#4223#0" expanded="false" />
           </folding>
         </state>
       </provider>

@@ -1,0 +1,59 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "org.bibalex.eol.archiver.Components.PropertiesFile",
+      "name": "",
+      "type": "org.bibalex.eol.archiver.Components.PropertiesFile"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "org.bibalex.eol.archiver.Components.PropertiesFile",
+      "name": "base-path",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.bibalex.eol.archiver.Components.PropertiesFile",
+      "name": "content-p-path",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.bibalex.eol.archiver.Components.PropertiesFile",
+      "defaultValue": 0,
+      "name": "maximum-file-size",
+      "type": "java.lang.Long"
+    },
+    {
+      "sourceType": "org.bibalex.eol.archiver.Components.PropertiesFile",
+      "name": "password",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.bibalex.eol.archiver.Components.PropertiesFile",
+      "name": "port",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.bibalex.eol.archiver.Components.PropertiesFile",
+      "name": "proxy",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.bibalex.eol.archiver.Components.PropertiesFile",
+      "name": "proxy-exists",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.bibalex.eol.archiver.Components.PropertiesFile",
+      "name": "proxy-user-name",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.bibalex.eol.archiver.Components.PropertiesFile",
+      "defaultValue": 0,
+      "name": "threads-count",
+      "type": "java.lang.Integer"
+    }
+  ]
+}

@@ -71,8 +71,6 @@
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
 
-
-
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -101,6 +99,14 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.6</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.tika/tika-core -->
+        <dependency>
+            <groupId>org.apache.tika</groupId>
+            <artifactId>tika-java7</artifactId>
+            <version>1.17</version>
+        </dependency>
+
 
 
     </dependencies>

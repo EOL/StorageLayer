@@ -14,14 +14,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+
+import static org.openxmlformats.schemas.spreadsheetml.x2006.main.STXmlDataType.type;
 
 /**
  * Created by maha.mostafa on 4/18/17.
@@ -39,7 +40,10 @@ public class RestAPIController {
     private PropertiesFile app;
     private BA_Proxy proxy;
     public static long maximumFileSize;
-
+    private String resId;
+    //    private Map mediaURLs;
+    private String mediaURLs;
+    private String expectedMediaFormat;
 
 
     @Autowired
@@ -123,7 +127,7 @@ public class RestAPIController {
 //            Path path = Paths.get(file.getAbsolutePath());
 //            ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
 
-                resource = new InputStreamResource(new FileInputStream(file));
+            resource = new InputStreamResource(new FileInputStream(file));
 
             // prevent caching
             HttpHeaders headers = new HttpHeaders();
@@ -148,83 +152,34 @@ public class RestAPIController {
 //                                    MediaType.parseMediaType("text/html"))
                     .body(new InputStreamResource(resource.getInputStream()));
 
-    }
-    catch(
-    FileNotFoundException ex)
+        } catch (
+                FileNotFoundException ex)
 
-    {
-        logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadResource():" + ex.getMessage());
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    } catch(
-    IOException e)
+        {
+            logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadResource():" + ex.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (
+                IOException e)
 
-    {
-        logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadResource():" + e.getMessage());
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        {
+            logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadResource():" + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 //        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
+        }
 
-}
+    }
 
     /**
-     *  A post function that dowloads a list of media URLs files.
-     * @param resId the resource unique id.
-     * @param mediaURLs, a list of the media URLs in the format of "["url1", "url2", ..]"
+     * A post function that dowloads a list of media URLs files.
+     *
+     * @param resId     the resource unique id.
+     * @param mediaURLs a list of the media URLsFailed to resolve argument 2 of type 'java.util.List'in the format of "["url1", "url2", ..]"
+     *                  //     * @param expectedMediaFormat a list of provided media urls expected content type
      * @return a hash in json format of each URL and its path in storage layer concatenated with the download status.
      */
-//    @RequestMapping(value="/downloadMedia/{resId}", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-//    public ResponseEntity<HashMap<String, String>> downloadMedia(@PathVariable("resId") String resId,
-//                                             @RequestBody List<String> mediaURLs) {
-//
-//        // TODO
-//        // uses UriComponentsBuilder, rest template to generate client
-//        logger.info("Downloading Media of resource (" + resId + ") ..");
-//
-//        long startT = System.currentTimeMillis();
-//        HashMap<String, String> resultList = new HashMap<String, String>();
-//
-//        try {
-//            String downloadMediaPath = basePath + File.separator + resId + File.separator + Constants.MEDIA_FOLDER + File.separator;
-//            Path mediaPth = Paths.get(downloadMediaPath);
-//
-//            if(Files.notExists(mediaPth)) {
-//                Files.createDirectories(mediaPth);
-//            }
-//
-//            resultList = service.downloadMedia(mediaURLs, proxy, app.getThreadsCount(), downloadMediaPath);
-//            logger.info("Time consumed for media of resource (" + resId + "):" + (System.currentTimeMillis() - startT) + " ms");
-//
-//            logger.debug("Downloaded URLS:'");
-//            resultList.forEach((k,v) -> {
-//                logger.debug("URL: (" + k + ") --> (" + v + ")");
-//            });
-//            if(resultList.size() == 0) {
-//                logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadMedia(): error during download threads.");
-//                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//            }
-//
-//            // prevent caching
-//            HttpHeaders headers = new HttpHeaders();
-//            headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-//            headers.add("Pragma", "no-cache");
-//            headers.add("Expires", "0");
-//
-//            return ResponseEntity
-//                    .ok()
-//                    .headers(headers)
-//                    .contentType(
-//                            MediaType.parseMediaType("application/json"))
-//                    .body(resultList);
-//        } catch (IOException e) {
-//            logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadMedia(): error in creating media folder: " + e.getMessage());
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//
-//    }
-
-    @RequestMapping(value="/downloadMedia/{resId}", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    @RequestMapping(value = "/downloadMedia/{resId}", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public ResponseEntity<HashMap<String, String>> downloadMedia(@PathVariable("resId") String resId,
-                                                                 @RequestBody List<String> mediaURLs) {
+                                                                 @RequestBody List<List<String>> mediaURLs) {
 
         // TODO
         // uses UriComponentsBuilder, rest template to generate client
@@ -234,21 +189,31 @@ public class RestAPIController {
         HashMap<String, String> resultList = new HashMap<String, String>();
 
         try {
+            ArrayList<String> expectedFormatList = new ArrayList<String>(),
+                    mediaURLS = new ArrayList<>();
+            for (int i = 0; i < mediaURLs.size(); i++) {
+                String url = mediaURLs.get(i).get(0),
+                        expectedFormat = mediaURLs.get(i).get(1);
+                expectedFormatList.add(expectedFormat);
+                mediaURLS.add(url);
+                System.out.println("----------- Media URL: " + url + "---------------");
+            }
+
+
             String downloadMediaPath = basePath + File.separator + resId + File.separator + Constants.MEDIA_FOLDER + File.separator;
             Path mediaPath = Paths.get(downloadMediaPath);
 
-            if(Files.notExists(mediaPath)) {
+            if (Files.notExists(mediaPath)) {
                 Files.createDirectories(mediaPath);
             }
-
-            resultList = service.downloadMedia(mediaURLs, proxy, app.getThreadsCount(), downloadMediaPath);
+            resultList = service.downloadMedia(mediaURLS, proxy, app.getThreadsCount(), downloadMediaPath, expectedFormatList);
             logger.info("Time consumed for media of resource (" + resId + "):" + (System.currentTimeMillis() - startT) + " ms");
 
             logger.debug("Downloaded URLS:'");
-            resultList.forEach((k,v) -> {
+            resultList.forEach((k, v) -> {
                 logger.debug("URL: (" + k + ") --> (" + v + ")");
             });
-            if(resultList.size() == 0) {
+            if (resultList.size() == 0) {
                 logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadMedia(): error during download threads.");
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
@@ -274,12 +239,13 @@ public class RestAPIController {
 
     /**
      * A post function to upload a content partner logo.
-     * @param cpId the unique id of the content partner.
+     *
+     * @param cpId         the unique id of the content partner.
      * @param uploadedFile the uploaded resource.
      * @return a success status if succeeded, error otherwise.
      */
-    @RequestMapping(value="/uploadCpLogo/{cpId}", method = RequestMethod.POST)
-    public ResponseEntity<String> uploadCpLogo(@PathVariable("cpId") String cpId, @RequestParam("logo") MultipartFile uploadedFile)  {
+    @RequestMapping(value = "/uploadCpLogo/{cpId}", method = RequestMethod.POST)
+    public ResponseEntity<String> uploadCpLogo(@PathVariable("cpId") String cpId, @RequestParam("logo") MultipartFile uploadedFile) {
         // By default upload the original resource
 
         logger.info("Uploading logo file [" + uploadedFile.getOriginalFilename() + "] of cp [" + cpId + "]");
@@ -287,7 +253,7 @@ public class RestAPIController {
             logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.uploadCPlogo: uploaded file is empty.");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        if(service.saveUploadedLogo(uploadedFile, contentPPath, cpId))
+        if (service.saveUploadedLogo(uploadedFile, contentPPath, cpId))
             return new ResponseEntity("Successfully uploaded logo file - " +
                     uploadedFile.getOriginalFilename(), new HttpHeaders(), HttpStatus.OK);
         else {
@@ -297,19 +263,20 @@ public class RestAPIController {
 
     /**
      * A post function downloads logo of the content partner.
+     *
      * @param cpId the unique id of the content partner.
      * @return the reqired logo file.
      */
     @RequestMapping(value = "/downloadCpLogo/{cpId}", method = RequestMethod.GET)
     public ResponseEntity<InputStreamResource> downloadCpLogo(@PathVariable("cpId") String cpId) {
         try {
-           logger.info("Downloading logo file of content partner [" + cpId + "] ");
+            logger.info("Downloading logo file of content partner [" + cpId + "] ");
             File logo = service.getCpLogo(contentPPath, cpId);
             InputStreamResource resource;
             // or use resource byte array
 //            Path path = Paths.get(file.getAbsolutePath());
 //            ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
-            if(logo != null) {
+            if (logo != null) {
                 resource = new InputStreamResource(new FileInputStream(logo));
             } else {
                 logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadCpLogo(): Logo not found");
@@ -328,7 +295,7 @@ public class RestAPIController {
 //                            .contentType(
 //                                    MediaType.parseMediaType("text/html"))
                     .body(new InputStreamResource(resource.getInputStream()));
-        } catch(FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {
             logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadCpLogo():" + ex.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IOException e) {
@@ -347,7 +314,6 @@ public class RestAPIController {
 
         return headers;
     }
-
 
 
 }
