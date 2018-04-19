@@ -22,8 +22,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
-import static org.openxmlformats.schemas.spreadsheetml.x2006.main.STXmlDataType.type;
-
 /**
  * Created by maha.mostafa on 4/18/17.
  */
@@ -40,10 +38,8 @@ public class RestAPIController {
     private PropertiesFile app;
     private BA_Proxy proxy;
     public static long maximumFileSize;
-    private String resId;
-    //    private Map mediaURLs;
-    private String mediaURLs;
-    private String expectedMediaFormat;
+    public static String hostName;
+    public static int tcpPortNumber;
 
 
     @Autowired
@@ -57,6 +53,8 @@ public class RestAPIController {
         this.basePath = app.getBasePath();
         this.contentPPath = app.getContentPPath();
         this.maximumFileSize = app.getMaximumFileSize();
+        this.hostName = app.getHostName();
+        this.tcpPortNumber = app.getTCPPortNumber();
         proxy.setProxyExists((app.getProxyExists().equalsIgnoreCase("true")) ? true : false);
         proxy.setPort(app.getPort());
         proxy.setProxy(app.getProxy());

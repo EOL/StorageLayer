@@ -1,5 +1,7 @@
 package org.bibalex.eol.archiver.utils;
 
+import fi.solita.clamav.ClamAVClient;
+import org.apache.commons.compress.utils.IOUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.tika.Tika;
 import org.bibalex.eol.archiver.controllers.RestAPIController;
@@ -15,7 +17,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.UUID;
 
+import static org.bibalex.eol.archiver.controllers.RestAPIController.hostName;
 import static org.bibalex.eol.archiver.controllers.RestAPIController.maximumFileSize;
+import static org.bibalex.eol.archiver.controllers.RestAPIController.tcpPortNumber;
 
 
 /**
@@ -106,7 +110,7 @@ public class Downloader {
             } else {
                 logger.info("File (" + fileURL + ") to be downloaded");
                 url = new URL(fileURL);
-                
+
                 httpConn = (HttpURLConnection) url.openConnection();
                 httpConn.setUseCaches(false);
                 httpConn.setDefaultUseCaches(false);
@@ -137,7 +141,25 @@ public class Downloader {
                     String responseContentType = httpConn.getContentType();
                     Tika fileTypeDetector = new Tika();
                     String requestContentType = fileTypeDetector.detect(url);
-                    if ((!(responseContentType.equalsIgnoreCase(requestContentType))) || (!(responseContentType.equalsIgnoreCase(type))&&(!(type.equalsIgnoreCase(""))))) {
+
+                    InputStream responseInputStream = httpConn.getInputStream();
+                    System.out.println("=============== Scanning Response: ================\n");
+
+                    ClamAVClient cl = new ClamAVClient(hostName, tcpPortNumber);
+                    byte[] reply;
+                    try {
+                        reply = cl.scan(responseInputStream);
+                    } catch (Exception e) {
+                        throw new RuntimeException("Could not scan the input", e);
+                    }
+                    if (!ClamAVClient.isCleanReply(reply)) {
+                        logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: Malicious File Detected - Cancelling Download");
+                        success = false;
+                        return saveFilePath + ", " + success;
+                    }
+                    else{
+
+                    if ((!(responseContentType.equalsIgnoreCase(requestContentType))) || (!(responseContentType.equalsIgnoreCase(type)) && (!(type.equalsIgnoreCase(""))))) {
                         logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: Expected Media Format mismatch");
                         success = false;
                         return saveFilePath + ", " + success;
@@ -145,34 +167,33 @@ public class Downloader {
                         long contentLength = Long.valueOf(httpConn.getContentLength());
                         if (contentLength < maximumFileSize) {
                             // opens input stream from the HTTP connection
-                            InputStream inputStream = httpConn.getInputStream();
                             // saves the input stream of the file URL
-                            saveURLStream(inputStream, saveFilePath);
+                            saveURLStream(responseInputStream, saveFilePath);
 
                             logger.info("File (" + fileURL + ") is downloaded");
                         } else {
-                            logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: Media File is too large to download; Download Aborted\nPlease select a file smaller than " + maximumFileSize / 1024 + " KB");
+                            logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: Media File is too large to download; Download Aborted\nPlease select a file smaller than " + maximumFileSize / 1048576 + " MB");
                             success = false;
                             return saveFilePath + ", " + success;
                         }
                     }
-                } else {
+                }} else {
                     success = false;
                     logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: No file to download. Server replied HTTP code: " + responseCode);
                 }
             }
-        }
-        catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
             success = false;
             logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: " + e.getMessage());
             ExceptionUtils.getStackTrace(e);
-        }
- catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             success = false;
             logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: " + e.getMessage());
         } catch (IOException e) {
             success = false;
             logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (httpConn != null)
                 httpConn.disconnect();

@@ -20,6 +20,11 @@
     },
     {
       "sourceType": "org.bibalex.eol.archiver.Components.PropertiesFile",
+      "name": "host-name",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.bibalex.eol.archiver.Components.PropertiesFile",
       "defaultValue": 0,
       "name": "maximum-file-size",
       "type": "java.lang.Long"
@@ -48,6 +53,11 @@
       "sourceType": "org.bibalex.eol.archiver.Components.PropertiesFile",
       "name": "proxy-user-name",
       "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.bibalex.eol.archiver.Components.PropertiesFile",
+      "name": "t-c-p-port-number",
+      "type": "java.lang.Integer"
     },
     {
       "sourceType": "org.bibalex.eol.archiver.Components.PropertiesFile",
