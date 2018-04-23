@@ -31,6 +31,11 @@
     },
     {
       "sourceType": "org.bibalex.eol.archiver.Components.PropertiesFile",
+      "name": "media-temp-path",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.bibalex.eol.archiver.Components.PropertiesFile",
       "name": "password",
       "type": "java.lang.String"
     },

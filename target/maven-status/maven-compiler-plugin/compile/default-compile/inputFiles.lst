@@ -1,6 +1,7 @@
 /home/ba/IdeaProjects/StorageLayer/src/main/java/org/bibalex/eol/archiver/ArchiverApp.java
 /home/ba/IdeaProjects/StorageLayer/src/main/java/org/bibalex/eol/archiver/controllers/RestAPIController.java
 /home/ba/IdeaProjects/StorageLayer/src/main/java/org/bibalex/eol/archiver/services/ArchivesService.java
+/home/ba/IdeaProjects/StorageLayer/src/main/java/org/bibalex/eol/archiver/utils/ImageResizer.java
 /home/ba/IdeaProjects/StorageLayer/src/main/java/model/BA_Proxy.java
 /home/ba/IdeaProjects/StorageLayer/src/main/java/org/bibalex/eol/archiver/utils/Downloader.java
 /home/ba/IdeaProjects/StorageLayer/src/main/java/org/bibalex/eol/archiver/utils/FileManager.java

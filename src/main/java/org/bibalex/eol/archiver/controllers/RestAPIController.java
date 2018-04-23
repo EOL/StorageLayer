@@ -35,6 +35,7 @@ public class RestAPIController {
     private ArchivesService service;
     private String basePath;
     private String contentPPath;
+    public static String mediaTempPath;
     private PropertiesFile app;
     private BA_Proxy proxy;
     public static long maximumFileSize;
@@ -52,6 +53,7 @@ public class RestAPIController {
         proxy = new BA_Proxy();
         this.basePath = app.getBasePath();
         this.contentPPath = app.getContentPPath();
+        this.mediaTempPath = app.getMediaTempPath();
         this.maximumFileSize = app.getMaximumFileSize();
         this.hostName = app.getHostName();
         this.tcpPortNumber = app.getTCPPortNumber();
