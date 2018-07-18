@@ -12,7 +12,7 @@ public class PropertiesFile {
     private String mediaTempPath;
     private String proxyUserName;
     private String password;
-    private String proxyExists;
+    private String proxyExists; 
     private String proxy;
     private String port;
     private int threadsCount;
