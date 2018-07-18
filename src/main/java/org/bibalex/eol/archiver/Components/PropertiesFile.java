@@ -9,12 +9,17 @@ public class PropertiesFile {
 
     private String basePath;
     private String contentPPath;
+    private String mediaTempPath;
     private String proxyUserName;
     private String password;
     private String proxyExists;
     private String proxy;
     private String port;
     private int threadsCount;
+    private long maximumFileSize;
+    private String hostName;
+    private int TCPPortNumber;
+
 
     public int getThreadsCount() {
         return threadsCount;
@@ -68,6 +73,13 @@ public class PropertiesFile {
         return basePath;
     }
 
+    public void setHostName(String hostIP){this.hostName = hostIP;}
+    public String getHostName(){return hostName;}
+
+    public void setTCPPortNumber(int TCPPortNumber){this.TCPPortNumber = TCPPortNumber;}
+    public int getTCPPortNumber (){return TCPPortNumber;}
+
+
     public String getContentPPath() {
         return contentPPath;
     }
@@ -79,5 +91,18 @@ public class PropertiesFile {
     public void setContentPPath(String contentPPath) {
         this.contentPPath = contentPPath;
     }
+
+    public void setMediaTempPath(String mediaTempPath) {
+        this.mediaTempPath = mediaTempPath;
+    }
+
+    public String getMediaTempPath() {
+        return mediaTempPath;
+    }
+
+    public void setMaximumFileSize(long maximumFileSize){this.maximumFileSize = maximumFileSize;}
+
+    public long getMaximumFileSize(){return maximumFileSize;}
+
 
 }
