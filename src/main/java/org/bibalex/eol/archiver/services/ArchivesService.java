@@ -9,8 +9,7 @@ import org.apache.commons.io.FileUtils;
 import org.bibalex.eol.archiver.utils.Constants;
 import org.bibalex.eol.archiver.utils.Downloader;
 import org.bibalex.eol.archiver.utils.FileManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,13 +26,13 @@ import java.util.concurrent.*;
 @Service
 public class ArchivesService {
 
-    private static final Logger logger = LoggerFactory.getLogger(ArchivesService.class);
+    private static final Logger logger = LogManager.getLogger(ArchivesService.class);
     private FileManager fileManager;
 
 
     public ArchivesService() {
         this.fileManager = new FileManager();
-        logger.debug("ArchivesService testing init");
+        logger.debug("ArchivesService Testing INIT");
     }
 
     /**
@@ -64,6 +63,8 @@ public class ArchivesService {
                     oldDir = new File(dir.getPath() + "_old");
                 }
                 dir.renameTo(oldDir);
+                logger.info("Found an Already Existing Version of Resource: " + resId);
+                logger.info("Older Version Renamed to: " + oldDir.getPath());
             }
 
             if (Files.notExists(directoryPath)) {
@@ -99,12 +100,12 @@ public class ArchivesService {
                     File file = files[0];
 
                     if (!file.delete()) {
-                        logger.error("org.bibalex.eol.archiver.services.ArchivesService.saveUploadedArchive(): Resource (" + resId + ") is " +
-                                ((isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) ? "original " : "DWCA ") + " and already exists, it can't be deleted.");
+                        logger.error("Error Deleting Resource: " + resId + "of Type: " + ((isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) ? "original " : "DWCA "));
                         succeeded = false;
                     } else {
                         Files.copy(uploadedFile.getInputStream(), filePath);
-                        logger.info("Resource (" + resId + ") is " + ((isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) ? "original " : "DWCA ") + "and already exists, it will be replaced.");
+                        logger.info("Resource: " + resId + " of Type: " + ((isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) ? "original " : "DWCA ") + "Already Exists");
+                        logger.info("Resource Files Successfully Replaced");
 
                         // TODO delete it
                         // create a duplicate DWCA until connectors are created
@@ -117,7 +118,7 @@ public class ArchivesService {
 
                     }
                 } else {
-                    logger.info("Resource (" + resId + ") is " + ((isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) ? "original " : "DWCA ") + " and created for first time.");
+                    logger.info(" Created New Resource: " + resId + " of Type: " + ((isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) ? "original " : "DWCA "));
                     Files.copy(uploadedFile.getInputStream(), filePath);
                     // TODO
                     // create a duplicate DWCA until connectors are created
@@ -131,8 +132,8 @@ public class ArchivesService {
             }
             return succeeded;
         } catch (IOException e) {
-            logger.error("org.bibalex.eol.archiver.services.ArchivesService.saveUploadedArchive(): Failed to save file (" + uploadedFile.getOriginalFilename() + ") is "
-                    + ((isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) ? "original " : "DWCA ") + e.getMessage());
+            logger.error("IOException: Failed to Save File: " + uploadedFile.getOriginalFilename());
+            logger.error("Stack Trace: ", e);
             return false;
         }
     }
@@ -161,7 +162,8 @@ public class ArchivesService {
         if (!isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE) && coreFiles.length != 0) {
             // Core file
             file = coreFiles[0];
-            logger.info("Downloading DWCA file [" + file.getName() + "] of resource [" + resId + "] ..");
+//            logger.info("Downloading DWCA File: " + file.getName() + " of Resource [" + resId + "] ..");
+            logger.info("Resource: " + resId + "- Downloading DWCA File: " + file.getName());
         } else {
             orgFiles = dir.listFiles(new FilenameFilter() {
                 public boolean accept(File dir, String name) {
@@ -170,14 +172,16 @@ public class ArchivesService {
             });
 
             if (orgFiles.length == 0) {
-                logger.error("org.bibalex.eol.archiver.services.ArchivesService.getResourceFile(): No org resource to download.");
+                logger.error("Resource: " + resId + "- No Original Resource to Download");
             } else {
                 file = orgFiles[0];
                 // Input stream resource
                 if (isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE))
-                    logger.info("Downloading original file [" + file.getName() + "] of resource [" + resId + "] ..");
+                    logger.info("Resource: " + resId + "- Downloading Original File: " + file.getName());
                 else {
-                    logger.info("Downloading DWCA file [" + file.getName() + "] of resource [" + resId + "] .. But it doesn't exist so original will be downloaded.");
+                    logger.info("Resource: " + resId + "- Attempting to Download DWCA File" + file.getName());
+                    logger.info("No DWCA File Found for Resource: " + resId);
+                    logger.info("Resource: " + resId + "- Downloading Original File: " + file.getName());
                     // uncomment if want to not download original when core is required
 //                    file = null;
                 }
@@ -212,7 +216,7 @@ public class ArchivesService {
         Downloader downloader = new Downloader(proxySettings);
 
         if (threadsCount > 1) {
-            logger.info("Downloading using parallel threading.");
+            logger.debug("Downloading Media Using Parallel Threading");
             // Parallel Download
             int size = ((mediaURLs.size() % threadsCount) == 0) ? (mediaURLs.size() / threadsCount) : (mediaURLs.size() % threadsCount) + 1;
             ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadsCount);
@@ -232,11 +236,16 @@ public class ArchivesService {
                 try {
                     resultList.putAll((HashMap<String, String>) result.get());
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
-                    logger.error("org.bibalex.eol.archiver.services.ArchivesService.downloadMedia: Error during thread downloading: " + e.getMessage());
+//                    e.printStackTrace();
+                    logger.error("Error in Download Thread");
+                    logger.error("InterruptedException");
+                    logger.error("Stack Trace: ", e);
                 } catch (ExecutionException e) {
-                    e.printStackTrace();
-                    logger.error("org.bibalex.eol.archiver.services.ArchivesService.downloadMedia: Error during thread downloading. " + e.getMessage());
+//                    e.printStackTrace();
+//                    logger.error("org.bibalex.eol.archiver.services.ArchivesService.downloadMedia: Error during thread downloading. " + e.getMessage());
+                    logger.error("Error in Download Thread");
+                    logger.error("ExecutionException");
+                    logger.error("Stack Trace: ", e);
                 }
             });
 
@@ -290,7 +299,7 @@ public class ArchivesService {
             boolean succeeded = true;
             String fullPath = cpPath + File.separator + cpId + File.separator + uploadedFile.getOriginalFilename();
             Path filePath = Paths.get(fullPath);
-            logger.debug("Logo of (" + cpId + ") will be saved in (" + fullPath + ")");
+            logger.info("Attempting to Save Logo for Content Partner: " + cpId + " to Path: " + fullPath);
 
             if (Files.notExists(Paths.get(cpPath + File.separator + cpId)))
                 Files.createDirectories(Paths.get(cpPath + File.separator + cpId));
@@ -302,10 +311,11 @@ public class ArchivesService {
                 if (files != null && files.length > 0) {
                     for (File file : files) {
                         if (!file.delete()) {
-                            logger.error("Content Partner has logo, but can't be deleted.");
+                            logger.error("Found Logo for Content Partner: " + cpId + ", Could Not Save New Logo");
                             succeeded = false;
                         } else {
-                            logger.info("Content Partner has logo, it was deleted.");
+                            logger.info("Deleted Already Existing Logo for Content Partner: " + cpId);
+                            logger.info("New Logo for Content Partner: " + cpId + "Successfully Uploaded");
                         }
                     }
                 }
@@ -313,8 +323,8 @@ public class ArchivesService {
             Files.copy(uploadedFile.getInputStream(), filePath);
             return succeeded;
         } catch (IOException e) {
-            logger.error("org.bibalex.eol.archiver.services.ArchivesService.saveUploadedLogo(): Failed to save file (" + uploadedFile.getOriginalFilename() + ") of content partner ("
-                    + cpId + "):" + e.getMessage());
+            logger.error("IOException: Failed to Save File: " + uploadedFile.getOriginalFilename());
+            logger.error("Stack Trace: ", e);
             return false;
         }
     }

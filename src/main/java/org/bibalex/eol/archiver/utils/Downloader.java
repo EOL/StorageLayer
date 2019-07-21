@@ -9,9 +9,9 @@ import org.apache.tika.mime.MediaType;
 import org.apache.tika.mime.MimeType;
 import org.apache.tika.mime.MimeTypeException;
 import org.bibalex.eol.archiver.controllers.RestAPIController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.*;
 import model.BA_Proxy;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.*;
@@ -27,14 +27,13 @@ import static org.bibalex.eol.archiver.controllers.RestAPIController.tcpPortNumb
 import static org.bibalex.eol.archiver.controllers.RestAPIController.mediaTempPath;
 
 
-
 /**
  * Created by maha.mostafa on 7/27/17.
  */
 public class Downloader {
 
 
-    private static final Logger logger = LoggerFactory.getLogger(RestAPIController.class);
+    private static final Logger logger = LogManager.getLogger(RestAPIController.class);
     private BA_Proxy proxy;
     private static final int BUFFER_SIZE = 4096; //4MG or 8192 8MG
 
@@ -101,21 +100,22 @@ public class Downloader {
         boolean success = true;
         HttpURLConnection httpConn = null;
         String encodedURL = encodeURL(fileURL);
-        logger.debug("URL:" + fileURL + " --> Encoded:" + encodedURL);
+        logger.debug("URL:" + fileURL);
+        logger.debug("Encoded URL: " + encodedURL);
 
         String saveFilePath = saveDir + encodedURL;
-        String tempSaveFilePath = mediaTempPath + "/"+encodedURL;
+        String tempSaveFilePath = mediaTempPath + "/" + encodedURL;
         File tempPath = new File(mediaTempPath);
-        if(!tempPath.exists())
+        if (!tempPath.exists())
             tempPath.mkdir();
         logger.debug("saveFilePath:" + saveFilePath);
 
         try {
             // Check if directory exists
             if (Files.exists(Paths.get(saveFilePath))) {
-                logger.info("Media file already exists ..");
+                logger.info("Media File Already Exists in Path: " + saveFilePath);
             } else {
-                logger.info("File (" + fileURL + ") to be downloaded");
+                logger.info("Attempting to Download Media File: " + fileURL);
                 url = new URL(fileURL);
 
                 httpConn = (HttpURLConnection) url.openConnection();
@@ -144,36 +144,36 @@ public class Downloader {
                     //                    // extracts file name from URL
                     //                    fileName = getFileNameFromUrl(fileURL);
                     //                }
-                     if (checkSecurityConcerns(url, httpConn, type, tempSaveFilePath)) {
-                         File savedMedia = new File(tempSaveFilePath);
-                         if(!savedMedia.exists())
-                             savedMedia.createNewFile();
-                         savedMedia.renameTo(new File(saveFilePath));
-                            logger.info("File (" + fileURL + ") is downloaded");
-                            checkMediaTypetoResize(saveFilePath);
-                        } else {
-                            success = false;
-                            return saveFilePath + ", " + success;
+                    if (checkSecurityConcerns(url, httpConn, type, tempSaveFilePath)) {
+                        File savedMedia = new File(tempSaveFilePath);
+                        if (!savedMedia.exists())
+                            savedMedia.createNewFile();
+                        savedMedia.renameTo(new File(saveFilePath));
+                        logger.info("Media File: " + fileURL + " Successfully Downloaded");
+                        checkMediaTypetoResize(saveFilePath);
+                    } else {
+                        success = false;
+                        return saveFilePath + ", " + success;
 //                            }
-                        }
                     }
-                else {
+                } else {
                     success = false;
-                    logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: No file to download. Server replied HTTP code: " + responseCode);
+                    logger.error("No File to Download");
+                    logger.error("HTTP Response Code: " + responseCode);
                 }
             }
         } catch (MalformedURLException e) {
             success = false;
-            logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: " + e.getMessage());
-            ExceptionUtils.getStackTrace(e);
+            logger.error("MalformedURLException: ", e);
         } catch (FileNotFoundException e) {
             success = false;
-            logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: " + e.getMessage());
+            logger.error("FileNotFoundException: ", e);
         } catch (IOException e) {
             success = false;
-            logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: " + e.getMessage());
+            logger.error("IOException: ", e);
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            logger.error("Exception: ", e);
         } finally {
             if (httpConn != null)
                 httpConn.disconnect();
@@ -199,7 +199,7 @@ public class Downloader {
      * @param saveFilePath the directory where to save the file.
      * @throws IOException
      */
-    private void saveURLStream(InputStream inputStream, String saveFilePath) throws IOException {
+    private void saveURLStream(InputStream inputStream, String saveFilePath) {
         // Using java IO
 //        // opens an output stream to save into file
 //        FileOutputStream outputStream = new FileOutputStream(saveFilePath);
@@ -212,46 +212,70 @@ public class Downloader {
 //        inputStream.close();
 
         // Using Java NIO
-        ReadableByteChannel channel = Channels.newChannel(inputStream);
-        FileOutputStream fos = new FileOutputStream(saveFilePath);
-        fos.getChannel().transferFrom(channel, 0, Long.MAX_VALUE);
-        fos.close();
-        channel.close();
+        try {
+            ReadableByteChannel channel = Channels.newChannel(inputStream);
+            FileOutputStream fos = null;
+
+            fos = new FileOutputStream(saveFilePath);
+
+            fos.getChannel().transferFrom(channel, 0, Long.MAX_VALUE);
+            fos.close();
+            channel.close();
+        } catch (FileNotFoundException e) {
+            logger.error("FileNotFoundException: ", e);
+        } catch (IOException e) {
+            logger.error("IOException: ", e);
+        }
     }
 
-    private void checkMediaTypetoResize(String filePath) throws IOException, MimeTypeException {
+    private void checkMediaTypetoResize(String filePath) {
+        try {
+            File mediaFile = new File(filePath);
+            ImageResizer imageResizer = new ImageResizer();
+            Tika fileTypeDetector = new Tika();
+            String fileType = null;
 
-        File mediaFile = new File(filePath);
-        ImageResizer imageResizer = new ImageResizer();
-        Tika fileTypeDetector = new Tika();
-        String fileType = fileTypeDetector.detect(mediaFile);
-        TikaConfig config = TikaConfig.getDefaultConfig();
-        BufferedInputStream stream = new BufferedInputStream(new FileInputStream(mediaFile));
-        MediaType mediaType = config.getMimeRepository().detect(stream, new Metadata());
-        MimeType mimeType = config.getMimeRepository().forName(mediaType.toString());
-        String extension = mimeType.getExtension();
-        if (fileType.contains("image"))
-            imageResizer.createThumbnail(mediaFile.getPath(), extension);
+            fileType = fileTypeDetector.detect(mediaFile);
+            TikaConfig config = TikaConfig.getDefaultConfig();
+            BufferedInputStream stream = new BufferedInputStream(new FileInputStream(mediaFile));
+            MediaType mediaType = config.getMimeRepository().detect(stream, new Metadata());
+            MimeType mimeType = config.getMimeRepository().forName(mediaType.toString());
+            String extension = mimeType.getExtension();
+            if (fileType.contains("image"))
+                imageResizer.createThumbnail(mediaFile.getPath(), extension);
+        } catch (IOException e) {
+            logger.error("IOException: ", e);
+        } catch (MimeTypeException e) {
+            logger.error("MimeTypeException: ", e);
+        }
+
     }
 
-    private boolean checkSecurityConcerns(URL request, HttpURLConnection response, String type, String scanDir) throws IOException {
-       return(checkMediaTypeMatch(request, response, type) && checkFileSize(response) && scanDownloadedFile(response, scanDir));
+    private boolean checkSecurityConcerns(URL request, HttpURLConnection response, String type, String scanDir){
+        boolean check;
+        try {
+            check = checkMediaTypeMatch(request, response, type) && checkFileSize(response) && scanDownloadedFile(response, scanDir);
+        } catch (IOException e) {
+            logger.info("IOException: ", e);
+            check = false;
+        }
+        return (check);
     }
 
     private boolean scanDownloadedFile(HttpURLConnection response, String filePath) throws IOException {
-        System.out.println("=============== Scanning Response: ================");
+//        System.out.println("=============== Scanning Response: ================");
+        logger.debug("Scanning Response");
         saveURLStream(response.getInputStream(), filePath);
         ClamAVClient cl = new ClamAVClient(hostName, tcpPortNumber);
         byte[] reply;
         File fileToScan = new File(filePath);
-            reply = cl.scan(new FileInputStream(fileToScan));
-            if (!ClamAVClient.isCleanReply(reply))
-            {
-                logger.error("ClamaAV Scanner: Malicious File Detected-- Deleting File");
-                fileToScan.delete();
-                return false;
-            }
-            logger.info("ClamAV Scanner: File marked as safe");
+        reply = cl.scan(new FileInputStream(fileToScan));
+        if (!ClamAVClient.isCleanReply(reply)) {
+            logger.error("ClamaAV Scanner: Malicious File Detected- Deleting File");
+            fileToScan.delete();
+            return false;
+        }
+        logger.info("ClamAV Scanner: File marked as safe");
         return true;
     }
 
@@ -259,19 +283,19 @@ public class Downloader {
         String responseContentType = response.getContentType();
         Tika fileTypeDetector = new Tika();
         String requestContentType = fileTypeDetector.detect(request);
-        System.out.println("Request Content Type: " + requestContentType);
-        System.out.println("Response Content Type: " + responseContentType);
+        logger.debug("Request Content Type: " + requestContentType);
+        logger.debug("Response Content Type: " + responseContentType);
         if ((!(responseContentType.equalsIgnoreCase(requestContentType))) || (!(responseContentType.equalsIgnoreCase(type)) && (!(type.equalsIgnoreCase(""))))) {
-            logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: Expected Media Format mismatch");
-        return false;
-    }
-    return true;
+            logger.error("Exception: Expected Media Format Mismatch");
+            return false;
+        }
+        return true;
     }
 
-    private boolean checkFileSize(HttpURLConnection response){
-        if(response.getContentLength() > maximumFileSize)
-        {
-            logger.error("org.bibalex.eol.archiver.utils.Downloader.downloadFromUrl: Media File is too large to download; Download Aborted\nPlease select a file smaller than " + maximumFileSize / 1048576 + " MB");
+    private boolean checkFileSize(HttpURLConnection response) {
+        if (response.getContentLength() > maximumFileSize) {
+            logger.error("Exception: Media File is too large to download; Download Aborted");
+            logger.error("Please select a file smaller than " + maximumFileSize / 1048576 + " MB");
             return false;
         }
         return true;

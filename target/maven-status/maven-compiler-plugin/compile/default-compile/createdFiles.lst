@@ -1,6 +1,7 @@
 org/bibalex/eol/archiver/services/ArchivesService$4.class
 META-INF/spring-configuration-metadata.json
 org/bibalex/eol/archiver/services/ArchivesService.class
+org/bibalex/eol/archiver/utils/ImageResizer.class
 org/bibalex/eol/archiver/services/ArchivesService$3.class
 org/bibalex/eol/archiver/utils/Downloader$1.class
 model/BA_Proxy.class

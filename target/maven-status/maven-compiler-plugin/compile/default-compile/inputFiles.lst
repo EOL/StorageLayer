@@ -1,8 +1,9 @@
-/home/hduser/eol/workspace/storagelayer/src/main/java/org/bibalex/eol/archiver/services/ArchivesService.java
-/home/hduser/eol/workspace/storagelayer/src/main/java/org/bibalex/eol/archiver/utils/Downloader.java
-/home/hduser/eol/workspace/storagelayer/src/main/java/org/bibalex/eol/archiver/ArchiverApp.java
-/home/hduser/eol/workspace/storagelayer/src/main/java/org/bibalex/eol/archiver/controllers/RestAPIController.java
-/home/hduser/eol/workspace/storagelayer/src/main/java/org/bibalex/eol/archiver/utils/FileManager.java
-/home/hduser/eol/workspace/storagelayer/src/main/java/org/bibalex/eol/archiver/Components/PropertiesFile.java
-/home/hduser/eol/workspace/storagelayer/src/main/java/model/BA_Proxy.java
-/home/hduser/eol/workspace/storagelayer/src/main/java/org/bibalex/eol/archiver/utils/Constants.java
+/home/ba/IdeaProjects/StorageLayer/src/main/java/org/bibalex/eol/archiver/ArchiverApp.java
+/home/ba/IdeaProjects/StorageLayer/src/main/java/org/bibalex/eol/archiver/controllers/RestAPIController.java
+/home/ba/IdeaProjects/StorageLayer/src/main/java/org/bibalex/eol/archiver/services/ArchivesService.java
+/home/ba/IdeaProjects/StorageLayer/src/main/java/org/bibalex/eol/archiver/utils/ImageResizer.java
+/home/ba/IdeaProjects/StorageLayer/src/main/java/model/BA_Proxy.java
+/home/ba/IdeaProjects/StorageLayer/src/main/java/org/bibalex/eol/archiver/utils/Downloader.java
+/home/ba/IdeaProjects/StorageLayer/src/main/java/org/bibalex/eol/archiver/utils/FileManager.java
+/home/ba/IdeaProjects/StorageLayer/src/main/java/org/bibalex/eol/archiver/Components/PropertiesFile.java
+/home/ba/IdeaProjects/StorageLayer/src/main/java/org/bibalex/eol/archiver/utils/Constants.java

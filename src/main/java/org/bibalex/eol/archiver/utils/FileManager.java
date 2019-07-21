@@ -1,5 +1,8 @@
 package org.bibalex.eol.archiver.utils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.bibalex.eol.archiver.services.ArchivesService;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -15,22 +18,29 @@ import java.nio.file.Paths;
 public class FileManager {
 
     private static final int BUFFER = 8192;
+    private static final Logger logger = LogManager.getLogger(FileManager.class);
 
-    public void customBufferBufferedStreamCopy(File source, File target) throws IOException {
-        InputStream fis = null;
-        OutputStream fos = null;
+    public void customBufferBufferedStreamCopy(File source, File target) {
+        try {
+            InputStream fis = null;
+            OutputStream fos = null;
             fis = new BufferedInputStream(new FileInputStream(source));
             fos = new BufferedOutputStream(new FileOutputStream(target));
 
             byte[] buf = new byte[BUFFER];
 
             int i;
+
             while ((i = fis.read(buf)) != -1) {
                 fos.write(buf, 0, i);
             }
+            close(fis);
+            close(fos);
+        } catch (IOException e) {
+//            e.printStackTrace();
+            logger.error("IOException: ", e);
+        }
 
-        close(fis);
-        close(fos);
     }
 
     public void nioBufferCopy(File source, File target) {
@@ -45,14 +55,15 @@ public class FileManager {
             while (in.read(buffer) != -1) {
                 buffer.flip();
 
-                while(buffer.hasRemaining()){
+                while (buffer.hasRemaining()) {
                     out.write(buffer);
                 }
 
                 buffer.clear();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            logger.error("IOException: ", e);
         } finally {
             close(in);
             close(out);
@@ -70,20 +81,24 @@ public class FileManager {
             long size = in.size();
             long transferred = in.transferTo(0, size, out);
 
-            while(transferred != size){
+            while (transferred != size) {
                 transferred += in.transferTo(transferred, size - transferred, out);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            logger.error("IOException: ", e);
         } finally {
             close(in);
             close(out);
         }
     }
 
-    public void copyFileUsingJava7Files(File source, File dest)
-            throws IOException {
-        Files.copy(source.toPath(), dest.toPath());
+    public void copyFileUsingJava7Files(File source, File dest) {
+        try {
+            Files.copy(source.toPath(), dest.toPath());
+        } catch (IOException e) {
+            logger.error("IOException: ", e);
+        }
     }
 
     public void close(Closeable closable) {
@@ -91,14 +106,21 @@ public class FileManager {
             try {
                 closable.close();
             } catch (IOException e) {
-                e.printStackTrace();
+//                e.printStackTrace();
+                logger.error("IOException: ", e);
             }
         }
     }
 
-    public void saveFile(MultipartFile file, String path) throws IOException {
-        byte[] bytes = file.getBytes();
-        Path fPath = Paths.get(path + file.getOriginalFilename());
-        Files.write(fPath, bytes);
+    public void saveFile(MultipartFile file, String path) {
+        try {
+            byte[] bytes = new byte[0];
+            bytes = file.getBytes();
+            Path fPath = Paths.get(path + file.getOriginalFilename());
+            Files.write(fPath, bytes);
+        } catch (IOException e) {
+            logger.error("IOException: ", e);
+
+        }
     }
 }

@@ -4,7 +4,9 @@ import model.BA_Proxy;
 import org.bibalex.eol.archiver.services.ArchivesService;
 import org.bibalex.eol.archiver.Components.PropertiesFile;
 import org.bibalex.eol.archiver.utils.Constants;
-import org.slf4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -29,7 +31,7 @@ import java.util.*;
 @RequestMapping("/archiver")
 public class RestAPIController {
 
-    private static final Logger logger = LoggerFactory.getLogger(RestAPIController.class);
+    private static final Logger logger = LogManager.getLogger(RestAPIController.class);
 
     @Autowired
     private ArchivesService service;
@@ -77,15 +79,18 @@ public class RestAPIController {
         // By default upload the original resource
         if (!validResourceType(isOrg))
             isOrg = getDefaultResourceType();
-        logger.info("Uploading resource file [" + uploadedFile.getOriginalFilename() + "] which is " + ((isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) ? "original " : "DWCA ") + " ..");
+        logger.info("Uploading Resource File: " + uploadedFile.getOriginalFilename());
+        logger.info("Uploaded Resource File Type: " + ((isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) ? "Original " : "DWCA "));
         if (uploadedFile.isEmpty()) {
-            logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.uploadResource: uploaded file is empty.");
+            logger.error("Exception: The Uploaded File is Empty");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        if (service.saveUploadedArchive(uploadedFile, basePath, resId, isOrg))
+        if (service.saveUploadedArchive(uploadedFile, basePath, resId, isOrg)) {
+            logger.info("Original Resource Successfully Uploaded");
             return new ResponseEntity("Successfully uploaded original resource - " +
                     uploadedFile.getOriginalFilename(), new HttpHeaders(), HttpStatus.OK);
-        else {
+        } else {
+            logger.error("Exception: Internal Server Error");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -116,7 +121,8 @@ public class RestAPIController {
             if (!validResourceType(isOrg))
                 isOrg = getDefaultResourceType();
 
-            logger.info("Downloading resource file [" + resId + "] which is " + ((isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) ? "original " : "DWCA "));
+            logger.info("Downloading Resource: " + resId);
+            logger.info("Downloaded Resource File Type: " + ((isOrg.equalsIgnoreCase(Constants.DEFAULT_RESOURCE_TYPE)) ? "Original " : "DWCA "));
 //            File file = service.getResourceFile(basePath, resId, isOrg);
             File file = service.getResourceFile(basePath, resId, isOrg, isNew);
             if (file == null)
@@ -152,19 +158,20 @@ public class RestAPIController {
 //                                    MediaType.parseMediaType("text/html"))
                     .body(new InputStreamResource(resource.getInputStream()));
 
-        } catch (
-                FileNotFoundException ex)
+        } catch (FileNotFoundException ex)
 
         {
-            logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadResource():" + ex.getMessage());
+            logger.error("HTTP Status: " + HttpStatus.NOT_FOUND);
+            logger.error("FileNotFoundException");
+            logger.error("Stack Trace: ", ex);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (
-                IOException e)
+        } catch (IOException e)
 
         {
-            logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadResource():" + e.getMessage());
+            logger.error("HTTP Status: " + HttpStatus.INTERNAL_SERVER_ERROR);
+            logger.error("IOException");
+            logger.error("Stack Trace: ", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
     }
@@ -183,7 +190,7 @@ public class RestAPIController {
 
         // TODO
         // uses UriComponentsBuilder, rest template to generate client
-        logger.info("Downloading Media of resource (" + resId + ") ..");
+        logger.info("Downloading Media of Resource: " + resId);
 
         long startT = System.currentTimeMillis();
         HashMap<String, String> resultList = new HashMap<String, String>();
@@ -196,7 +203,8 @@ public class RestAPIController {
                         expectedFormat = mediaURLs.get(i).get(1);
                 expectedFormatList.add(expectedFormat);
                 mediaURLS.add(url);
-                System.out.println("----------- Media URL: " + url + "---------------");
+//                System.out.println("----------- Media URL: " + url + "---------------");
+                logger.debug("Media URL: " + url);
             }
 
 
@@ -207,14 +215,16 @@ public class RestAPIController {
                 Files.createDirectories(mediaPath);
             }
             resultList = service.downloadMedia(mediaURLS, proxy, app.getThreadsCount(), downloadMediaPath, expectedFormatList);
-            logger.info("Time consumed for media of resource (" + resId + "):" + (System.currentTimeMillis() - startT) + " ms");
+            logger.info("Downloaded Media of Resource: " + resId + " in " + (System.currentTimeMillis() - startT) + " milliseconds");
 
             logger.debug("Downloaded URLS:'");
             resultList.forEach((k, v) -> {
                 logger.debug("URL: (" + k + ") --> (" + v + ")");
             });
             if (resultList.size() == 0) {
-                logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadMedia(): error during download threads.");
+//                logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadMedia(): error during download threads.");
+                logger.error("HTTP Status: " + HttpStatus.INTERNAL_SERVER_ERROR);
+                logger.error("Error in Download Threads");
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
 
@@ -231,7 +241,9 @@ public class RestAPIController {
                             MediaType.parseMediaType("application/json"))
                     .body(resultList);
         } catch (IOException e) {
-            logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadMedia(): error in creating media folder: " + e.getMessage());
+            logger.error("HTTP Status: " + HttpStatus.INTERNAL_SERVER_ERROR);
+            logger.error("IOException");
+            logger.error("Stack Trace: ", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -248,15 +260,21 @@ public class RestAPIController {
     public ResponseEntity<String> uploadCpLogo(@PathVariable("cpId") String cpId, @RequestParam("logo") MultipartFile uploadedFile) {
         // By default upload the original resource
 
-        logger.info("Uploading logo file [" + uploadedFile.getOriginalFilename() + "] of cp [" + cpId + "]");
+//        logger.info("Uploading Logo File: " + uploadedFile.getOriginalFilename() + "] of cp [" + cpId + "]");
+        logger.info("Uploading Logo for Content Partner: " + cpId);
+        logger.info("Logo File Path: " + uploadedFile.getOriginalFilename());
         if (uploadedFile.isEmpty()) {
-            logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.uploadCPlogo: uploaded file is empty.");
+            logger.error("Uploaded File is Empty");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         if (service.saveUploadedLogo(uploadedFile, contentPPath, cpId))
+        {
+            logger.info("Successfully Uploaded Logo File");
             return new ResponseEntity("Successfully uploaded logo file - " +
                     uploadedFile.getOriginalFilename(), new HttpHeaders(), HttpStatus.OK);
+        }
         else {
+            logger.error("HTTP Status: " + HttpStatus.BAD_REQUEST);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -270,7 +288,7 @@ public class RestAPIController {
     @RequestMapping(value = "/downloadCpLogo/{cpId}", method = RequestMethod.GET)
     public ResponseEntity<InputStreamResource> downloadCpLogo(@PathVariable("cpId") String cpId) {
         try {
-            logger.info("Downloading logo file of content partner [" + cpId + "] ");
+            logger.info("Downloading Logo for Content Partner: " + cpId);
             File logo = service.getCpLogo(contentPPath, cpId);
             InputStreamResource resource;
             // or use resource byte array
@@ -279,7 +297,7 @@ public class RestAPIController {
             if (logo != null) {
                 resource = new InputStreamResource(new FileInputStream(logo));
             } else {
-                logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadCpLogo(): Logo not found");
+                logger.error("Logo Not Found");
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
 
@@ -296,10 +314,14 @@ public class RestAPIController {
 //                                    MediaType.parseMediaType("text/html"))
                     .body(new InputStreamResource(resource.getInputStream()));
         } catch (FileNotFoundException ex) {
-            logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadCpLogo():" + ex.getMessage());
+            logger.error("HTTP Status: " + HttpStatus.NOT_FOUND);
+            logger.error("FileNotFoundException");
+            logger.error("Stack Trace: ", ex);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IOException e) {
-            logger.error("org.bibalex.eol.archiver.controllers.RestAPIController.downloadCpLogo():" + e.getMessage());
+            logger.error("HTTP Status: " + HttpStatus.NOT_FOUND);
+            logger.error("IOException");
+            logger.error("Stack Trace: ", e);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
