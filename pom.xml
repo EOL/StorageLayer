@@ -6,7 +6,7 @@
 
     <groupId>org.bibalex.eol</groupId>
     <artifactId>storage-layer</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <version>1.0</version>
 
     <parent>
@@ -17,6 +17,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <start-class>org.bibalex.eol.imageResizing.main</start-class>
     </properties>
 
     <dependencies>
@@ -173,6 +174,12 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.16</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sharneng</groupId>
+            <artifactId>gm4java</artifactId>
+            <version>1.1.1</version>
         </dependency>
 
     </dependencies>
