@@ -9,7 +9,8 @@ import org.apache.commons.io.FileUtils;
 import org.bibalex.eol.archiver.utils.Constants;
 import org.bibalex.eol.archiver.utils.Downloader;
 import org.bibalex.eol.archiver.utils.FileManager;
-import org.apache.logging.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,7 +27,7 @@ import java.util.concurrent.*;
 @Service
 public class ArchivesService {
 
-    private static final Logger logger = LogManager.getLogger(ArchivesService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ArchivesService.class);
     private FileManager fileManager;
 
 

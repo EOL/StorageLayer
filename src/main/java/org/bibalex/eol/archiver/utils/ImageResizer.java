@@ -1,7 +1,8 @@
 package org.bibalex.eol.archiver.utils;
 
 import org.imgscalr.Scalr;
-import org.apache.logging.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -9,7 +10,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class ImageResizer {
-    private static final Logger logger = LogManager.getLogger(ImageResizer.class);
+    private static final Logger logger = LoggerFactory.getLogger(ImageResizer.class);
 
     public static void main(String[] args) throws IOException, InterruptedException {
     }

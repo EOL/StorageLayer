@@ -1,8 +1,8 @@
 package org.bibalex.eol.archiver.utils;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.bibalex.eol.archiver.services.ArchivesService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -18,7 +18,7 @@ import java.nio.file.Paths;
 public class FileManager {
 
     private static final int BUFFER = 8192;
-    private static final Logger logger = LogManager.getLogger(FileManager.class);
+    private static final Logger logger = LoggerFactory.getLogger(FileManager.class);
 
     public void customBufferBufferedStreamCopy(File source, File target) {
         try {

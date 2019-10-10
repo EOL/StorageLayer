@@ -4,9 +4,9 @@ import model.BA_Proxy;
 import org.bibalex.eol.archiver.services.ArchivesService;
 import org.bibalex.eol.archiver.Components.PropertiesFile;
 import org.bibalex.eol.archiver.utils.Constants;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
+
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -31,7 +31,7 @@ import java.util.*;
 @RequestMapping("/archiver")
 public class RestAPIController {
 
-    private static final Logger logger = LogManager.getLogger(RestAPIController.class);
+    private static final Logger logger = LoggerFactory.getLogger(RestAPIController.class);
 
     @Autowired
     private ArchivesService service;

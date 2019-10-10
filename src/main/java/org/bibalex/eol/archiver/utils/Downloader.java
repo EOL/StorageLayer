@@ -9,8 +9,8 @@ import org.apache.tika.mime.MediaType;
 import org.apache.tika.mime.MimeType;
 import org.apache.tika.mime.MimeTypeException;
 import org.bibalex.eol.archiver.controllers.RestAPIController;
-import org.apache.logging.log4j.*;
 import model.BA_Proxy;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
@@ -33,7 +33,7 @@ import static org.bibalex.eol.archiver.controllers.RestAPIController.mediaTempPa
 public class Downloader {
 
 
-    private static final Logger logger = LogManager.getLogger(RestAPIController.class);
+    private static final Logger logger = LoggerFactory.getLogger(RestAPIController.class);
     private BA_Proxy proxy;
     private static final int BUFFER_SIZE = 4096; //4MG or 8192 8MG
 
